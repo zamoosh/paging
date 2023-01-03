@@ -1,3 +1,18 @@
 from django.db import models
 
-# Create your models here.
+
+class Process(models.Model):
+    PROCESS_STATUS = (
+        ("P", "pending"),
+        ("D", "done"),
+        ("NS", "not started"),
+    )
+    memory = models.IntegerField()
+    duration = models.IntegerField()
+    status = models.CharField(choices=PROCESS_STATUS, max_length=3)
+
+
+class Pages(models.Model):
+    size = models.IntegerField()
+    status = models.BooleanField()
+    process = models.ForeignKey(Process, on_delete=models.CASCADE)
