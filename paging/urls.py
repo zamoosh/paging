@@ -1,7 +1,8 @@
 from django.urls import path, include
+from .views import *
 
 app_name = 'paging'
 
 urlpatterns = [
-    path('paging/', include('paging.views.urls')),
+    path('', ProcessList.as_view(), name="index")
 ]
