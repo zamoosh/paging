@@ -7,15 +7,18 @@
                href="javascript:void(0)"></a>
             <!-- sidebar-toggle-->
             <a class="logo-horizontal " href="#">
-                <img src="{% static 'admin/assets/images/brand/logo.png' %}" class="header-brand-img desktop-logo" alt="logo">
-                <img src="{% static 'admin/assets/images/brand/logo-3.png' %}" class="header-brand-img light-logo1"
+                <img src="{% static 'assets/images/brand/logo.png' %}" class="header-brand-img desktop-logo" alt="logo">
+                <img src="{% static 'assets/images/brand/logo-3.png' %}" class="header-brand-img light-logo1"
                      alt="logo">
             </a>
             <!-- LOGO -->
-            <div class="main-header-center ms-3 d-none d-lg-block">
-                <input class="form-control" placeholder="Search for results..." type="search">
-                <button class="btn px-0 pt-2"><i class="fe fe-search" aria-hidden="true"></i></button>
-            </div>
+
+            <!-- searchbar -->
+             <div class="main-header-center ms-3 d-none d-lg-block">
+                 <input disabled class="form-control" placeholder="Search for results..." type="search">
+                 <button class="btn px-0 pt-2"><i class="fe fe-search" aria-hidden="true"></i></button>
+             </div>
+            <!-- end: searchbar -->
             <div class="d-flex order-lg-2 ms-auto header-right-icons">
                 <div class="dropdown d-none">
                     <a href="javascript:void(0)" class="nav-link icon" data-bs-toggle="dropdown">
@@ -30,7 +33,7 @@
                         </div>
                     </div>
                 </div>
-                {% include 'admin/live_time.html' %}
+                {% include 'live_time.html' %}
                 <!-- SEARCH -->
                 <button class="navbar-toggler navresponsive-toggler d-lg-none ms-auto" type="button"
                         data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent-4"
@@ -65,7 +68,9 @@
                             {% comment %} END COUNTRY {% endcomment %}
 
                             {% comment %} SEARCH {% endcomment %}
-                            <div class="dropdown  d-flex">
+
+                            <!-- layout switcher -->
+                            {% comment %} <div class="dropdown  d-flex">
                                 <a class="nav-link icon theme-layout nav-link-bg layout-setting">
                                     <span class="dark-layout {% if request.user.extra.dark_mode %}active{% endif %} ">
                                         <i class="fe fe-moon"></i>
@@ -74,7 +79,8 @@
                                         <i class="fe fe-sun {% if not request.user.extra.dark_mode %}active{% endif %} "></i>
                                     </span>
                                 </a>
-                            </div>
+                            </div> {% endcomment %}
+                            <!-- end: layout switcher -->
                             {% comment %} END SEARCH {% endcomment %}
 
                             {% comment %}Theme-Layout{% endcomment %}
@@ -166,7 +172,7 @@
                                         <a class="dropdown-item d-flex" href="chat.html">
                                                         <span
                                                                 class="avatar avatar-md brround me-3 align-self-center cover-image"
-                                                                data-bs-image-src="../admin/assets/images/users/1.jpg"></span>
+                                                                data-bs-image-src="../assets/images/users/1.jpg"></span>
                                             <div class="wd-90p">
                                                 <div class="d-flex">
                                                     <h5 class="mb-1">Peter Theil</h5>
@@ -180,7 +186,7 @@
                                         <a class="dropdown-item d-flex" href="chat.html">
                                                         <span
                                                                 class="avatar avatar-md brround me-3 align-self-center cover-image"
-                                                                data-bs-image-src="../admin/assets/images/users/15.jpg"></span>
+                                                                data-bs-image-src="../assets/images/users/15.jpg"></span>
                                             <div class="wd-90p">
                                                 <div class="d-flex">
                                                     <h5 class="mb-1">Abagael Luth</h5>
@@ -194,7 +200,7 @@
                                         <a class="dropdown-item d-flex" href="chat.html">
                                                         <span
                                                                 class="avatar avatar-md brround me-3 align-self-center cover-image"
-                                                                data-bs-image-src="../admin/assets/images/users/12.jpg"></span>
+                                                                data-bs-image-src="../assets/images/users/12.jpg"></span>
                                             <div class="wd-90p">
                                                 <div class="d-flex">
                                                     <h5 class="mb-1">Brizid Dawson</h5>
@@ -208,7 +214,7 @@
                                         <a class="dropdown-item d-flex" href="chat.html">
                                                         <span
                                                                 class="avatar avatar-md brround me-3 align-self-center cover-image"
-                                                                data-bs-image-src="../admin/assets/images/users/4.jpg"></span>
+                                                                data-bs-image-src="../assets/images/users/4.jpg"></span>
                                             <div class="wd-90p">
                                                 <div class="d-flex">
                                                     <h5 class="mb-1">Shannon Shaw</h5>
@@ -241,10 +247,12 @@
                              {% comment %} END MESSAGE-BOX {% endcomment %}
 
                              {% comment %} SIDE-MENU {% endcomment %}
-                            <div class="dropdown d-flex profile-1">
+
+                            <!-- profile -->
+                            {% comment %} <div class="dropdown d-flex profile-1">
                                 <a href="javascript:void(0)" data-bs-toggle="dropdown"
                                    class="nav-link leading-none d-flex">
-                                    <img src="{% if request.user.image %}{{ request.user.image.url }}{% else %}{% static "admin/assets/images/pngs/1.jpg" %}{% endif %}" alt="profile-user"
+                                    <img src="{% if request.user.image %}{{ request.user.image.url }}{% else %}{% static "assets/images/pngs/1.jpg" %}{% endif %}" alt="profile-user"
                                          class="avatar profile-user brround cover-image">
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
@@ -255,22 +263,24 @@
                                         </div>
                                     </div>
                                     <div class="dropdown-divider m-0"></div>
-                                    <a class="dropdown-item" href="{% url 'client:profile' %}">
+                                    <a class="dropdown-item" href="javascript:void(0)">
                                         <i class="dropdown-icon fe fe-user"></i>profile
                                     </a>
-                                    <a class="dropdown-item" href="{% url 'blog:post_list' %}">
+                                    <a class="dropdown-item" href="javascript:void(0)">
                                         <i class="dropdown-icon fe fe-list"></i>post list
                                     </a>
-                                    <a class="dropdown-item" href="{% url 'blog:category_list' %}">
+                                    <a class="dropdown-item" href="javascript:void(0)">
                                         <i class="dropdown-icon fe fe-list"></i>
                                         category list
                                     </a>
-                                    <a class="dropdown-item" href="{% url 'index' %}">
+                                    <a class="dropdown-item" href="javascript:void(0)">
                                         <i class="dropdown-icon fe fe-alert-circle"></i>
                                         خروج
                                     </a>
                                 </div>
-                            </div>
+                            </div> {% endcomment %}
+                            <!-- end: profile -->
+
                              {% comment %}END SIDE-MENU{% endcomment %}
                         </div>
                     </div>
@@ -296,70 +306,70 @@
                     <li class="col-lg-6 mb-2">
                         <a href="javascript:void(0)" class="btn btn-country btn-lg btn-block active">
                             <span class="country-selector"><img alt=""
-                                                                src="{% static 'admin/assets/images/flags/us_flag.jpg' %}"
+                                                                src="{% static 'assets/images/flags/us_flag.jpg' %}"
                                                                 class="me-3 language"></span>USA
                         </a>
                     </li>
                     <li class="col-lg-6 mb-2">
                         <a href="javascript:void(0)" class="btn btn-country btn-lg btn-block">
                             <span class="country-selector"><img alt=""
-                                                                src="{% static 'admin/assets/images/flags/italy_flag.jpg' %}"
+                                                                src="{% static 'assets/images/flags/italy_flag.jpg' %}"
                                                                 class="me-3 language"></span>Italy
                         </a>
                     </li>
                     <li class="col-lg-6 mb-2">
                         <a href="javascript:void(0)" class="btn btn-country btn-lg btn-block">
                             <span class="country-selector"><img alt=""
-                                                                src="{% static 'admin/assets/images/flags/spain_flag.jpg' %}"
+                                                                src="{% static 'assets/images/flags/spain_flag.jpg' %}"
                                                                 class="me-3 language"></span>Spain
                         </a>
                     </li>
                     <li class="col-lg-6 mb-2">
                         <a href="javascript:void(0)" class="btn btn-country btn-lg btn-block">
                             <span class="country-selector"><img alt=""
-                                                                src="{% static 'admin/assets/images/flags/india_flag.jpg' %}"
+                                                                src="{% static 'assets/images/flags/india_flag.jpg' %}"
                                                                 class="me-3 language"></span>India
                         </a>
                     </li>
                     <li class="col-lg-6 mb-2">
                         <a href="javascript:void(0)" class="btn btn-country btn-lg btn-block">
                             <span class="country-selector"><img alt=""
-                                                                src="{% static 'admin/assets/images/flags/french_flag.jpg' %}"
+                                                                src="{% static 'assets/images/flags/french_flag.jpg' %}"
                                                                 class="me-3 language"></span>French
                         </a>
                     </li>
                     <li class="col-lg-6 mb-2">
                         <a href="javascript:void(0)" class="btn btn-country btn-lg btn-block">
                             <span class="country-selector"><img alt=""
-                                                                src="{% static 'admin/assets/images/flags/russia_flag.jpg' %}"
+                                                                src="{% static 'assets/images/flags/russia_flag.jpg' %}"
                                                                 class="me-3 language"></span>Russia
                         </a>
                     </li>
                     <li class="col-lg-6 mb-2">
                         <a href="javascript:void(0)" class="btn btn-country btn-lg btn-block">
                             <span class="country-selector"><img alt=""
-                                                                src="{% static 'admin/assets/images/flags/germany_flag.jpg' %}"
+                                                                src="{% static 'assets/images/flags/germany_flag.jpg' %}"
                                                                 class="me-3 language"></span>Germany
                         </a>
                     </li>
                     <li class="col-lg-6 mb-2">
                         <a href="javascript:void(0)" class="btn btn-country btn-lg btn-block">
                             <span class="country-selector"><img alt=""
-                                                                src="{% static 'admin/assets/images/flags/argentina.jpg' %}"
+                                                                src="{% static 'assets/images/flags/argentina.jpg' %}"
                                                                 class="me-3 language"></span>Argentina
                         </a>
                     </li>
                     <li class="col-lg-6 mb-2">
                         <a href="javascript:void(0)" class="btn btn-country btn-lg btn-block">
                             <span class="country-selector"><img alt=""
-                                                                src="{% static 'admin/assets/images/flags/malaysia.jpg' %}"
+                                                                src="{% static 'assets/images/flags/malaysia.jpg' %}"
                                                                 class="me-3 language"></span>Malaysia
                         </a>
                     </li>
                     <li class="col-lg-6 mb-2">
                         <a href="javascript:void(0)" class="btn btn-country btn-lg btn-block">
                             <span class="country-selector"><img alt=""
-                                                                src="{% static 'admin/assets/images/flags/turkey.jpg' %}"
+                                                                src="{% static 'assets/images/flags/turkey.jpg' %}"
                                                                 class="me-3 language"></span>Turkey
                         </a>
                     </li>
