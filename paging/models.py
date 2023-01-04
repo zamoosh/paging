@@ -53,7 +53,7 @@ class Process(models.Model):
         return list(cls.objects.all().values('memory', 'duration', 'status', 'page_count'))
 
 
-class ProcessesPerSecond(models.Model):
+class Log(models.Model):
     time = models.IntegerField()
     content = models.JSONField(default=dict)
 
