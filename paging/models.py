@@ -32,3 +32,8 @@ class Process(models.Model):
             duration = random.randint(1, 5)
             array.append(cls(memory=memory, duration=duration))
         cls.objects.bulk_create(array)
+
+
+class ProcessesPerSecond(models.Model):
+    time = models.IntegerField()
+    content = models.JSONField(default=dict)
