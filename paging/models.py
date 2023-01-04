@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class Memory(models.Model):  # ali
+class Memory(models.Model):
     size = models.IntegerField(null=True)
     page_count = models.IntegerField(null=True)
     page_size = models.IntegerField(null=True)
@@ -38,7 +38,7 @@ class Process(models.Model):
 
         process_array = []
         for i in range(cls.process_count):
-            memory = random.randint(1, 100)
+            memory = random.randint(1, 10)
             duration = random.randint(1, 2)
             process_array.append(cls(memory=memory, duration=duration))
         cls.objects.bulk_create(process_array)
