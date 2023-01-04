@@ -8,4 +8,6 @@ class ProcessList(View):
 
 
 def hello(request):
+    print('change')
     return HttpResponse('hello here we go agian')
+
