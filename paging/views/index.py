@@ -6,37 +6,40 @@ class Index(View):
         return render(request, 'index.html')
 
     def post(self, request):
-        memory = request.POST.get('memory')
-        page_size = request.POST.get('page_size')
-        if memory and page_size:
-            self.clear_database()
-            self.generate_process()
-        print(memory, page_size)
-        return HttpResponse('welam kon ')
+        Process.clear_table()
+        ProcessesPerSecond.clear_table()
 
-    def clear_database(self):
-        Process.clear_process()
-        Memory.clear_memory()
-        Pages.clear_pages()
+        memory = int(request.POST.get('memory'))
+        page_size = int(request.POST.get('page_size'))
+        memory_object = Memory.get_memory()
 
-    def generate_process(self):
-        process_array = []
-        # for i in range(10000):
-        #     # Process.objects.create(memory=10, duration=10)
-        #     print(i)
-        for i in Process.objects.all():
-            print(i)
-            # process_array.append(Process(memory=10, duration=10))
+        memory_object.memory = memory
+        memory_object.page_count = math.floor(memory / page_size)
+        memory_object.left_page = memory_object.page_count
 
-        # process_array = list(Process.objects.all())
-        # for i in range(10000):
-        #     some actions
-            pass
-        self.clear_database()
+        process_array = Process.generate_process()
 
+        not_completed = Process.objects.exclude(status__icontains='D').exists()
+        time = 0
+        while not_completed:
+            for process in process_array:
+                page_per_process = math.ceil(process.memory / page_size)
+                if process.status == "P":
+                    process.duration -= 1
+                if process.duration == 0:
+                    process.status = "D"
+                if memory_object.left_page > page_per_process and process.status == "NS":
+                    process.page_count = page_per_process
+                    memory_object.left_page -= page_per_process
+                    process.status = "P"
 
+            Process.clear_table()
+            process_array = Process.update_process(process_array)
+            ProcessesPerSecond.objects.create(
+                time=time,
+                content=Process.get_json_data()
+            )
+            time += 1
+            not_completed = Process.objects.exclude(status__icontains='D').exists()
 
-
-
-    def total_memory_gtn_process(self):
-        pass
+        return HttpResponse('salam man be to yar ghadimi!!')
