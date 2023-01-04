@@ -4,6 +4,7 @@ from django.db import models
 class Memory(models.Model):  # ali
     size = models.IntegerField(null=True)
     page_count = models.IntegerField(null=True)
+    page_size = models.IntegerField(null=True)
     left_page = models.IntegerField(null=True)
 
     @classmethod
