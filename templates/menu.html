@@ -1,0 +1,262 @@
+{% load static %}
+<div class="sticky">
+    <div class="app-sidebar__overlay" data-bs-toggle="sidebar"></div>
+    <div class="app-sidebar">
+        <div class="side-header">
+            <a class="header-brand1" href="{% url 'client:admin' %}">
+                <!-- light -->
+                <!-- big logo -->
+                <img src="{% static 'admin/assets/images/brand/vidoneplus_mainlogo.png' %}" class="header-brand-img desktop-logo" alt="logo">
+                <!-- small logo -->
+                <img src="{% static 'admin/assets/images/brand/vidoneplus-1.png' %}" class="header-brand-img toggle-logo" alt="logo">
+
+                <!-- dark logo -->
+                <!-- big logo -->
+                <img src="{% static 'admin/assets/images/brand/vidoneplus_mainlogo.png' %}" class="header-brand-img light-logo1" alt="logo">
+                <!-- small logo -->
+                <img src="{% static 'admin/assets/images/brand/vidoneplus-1.png' %}" class="header-brand-img light-logo" alt="logo">
+            </a>
+            <!-- LOGO -->
+        </div>
+        <div class="main-sidemenu">
+            <div class="slide-left disabled" id="slide-left">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     fill="#7b8191" width="24" height="24" viewBox="0 0 24 24">
+                    <path d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z"></path>
+                </svg>
+            </div>
+            <ul class="side-menu">
+                <li class="sub-category">
+                    <h3>خانه</h3>
+                </li>
+                <li class="slide">
+                    <a class="side-menu__item" data-bs-toggle="slide" href="{% url 'index' %}">
+                        <i class="side-menu__icon fe fe-home"></i>
+                        <span class="side-menu__label">خانه</span>
+                    </a>
+                </li>
+                {% if request.user.is_superuser or request.user.is_staff %}
+                    {% comment %} <li class="sub-category">
+                        <h3>بخش ادمین</h3>
+                    </li>
+                    <li class="slide">
+                        <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)">
+                            <i class="side-menu__icon fe fe-cpu"></i>
+                            <span class="side-menu__label">منوی ادمین</span>
+                            <i class="angle fe fe-chevron-right"></i>
+                        </a>
+                        <ul class="slide-menu">
+                            <li>
+                                <a href="javascript:void(0)" class="slide-item">
+                                    <i class="side-menu__icon fe fe-mail"></i>
+                                    پست‌ها
+                                </a>
+                            </li>
+                             <li>
+                                <a href="{% url 'blog:category_list' %}" class="slide-item">
+                                    <i class="side-menu__icon bi bi-signpost-split"></i>
+                                    دسته‌بندی‌ها
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" class="slide-item">
+                                    <i class="side-menu__icon bi bi-tags"></i>
+                                    تگ‌ها
+                                </a>
+                            </li>
+                        </ul>
+                    </li> {% endcomment %}
+                    <li class="sub-category">
+                        <h3>بخش ادمین</h3>
+                    </li>
+                    <li class="slide">
+                        <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)">
+                            <i class="side-menu__icon bi bi-signpost-split"></i>
+                            <span class="side-menu__label">دسته‌بندی</span>
+                            <i class="angle fe fe-chevron-right"></i>
+                        </a>
+                        <ul class="slide-menu">
+                            <li>
+                                <a href="{% url 'blog:admin:category_create' %}" class="slide-item">ایجاد دسته‌بندی</a>
+                            </li>
+                            {% if category %}
+                                <li class="sub-slide">
+                                    <a class="sub-side-menu__item" data-bs-toggle="sub-slide" href="javascript:void(0)">
+                                        <span class="sub-side-menu__label">فهرست</span>
+                                        <i class="sub-angle fe fe-chevron-right"></i>
+                                    </a>
+                                    <ul class="sub-slide-menu">
+                                        {% if posts %}
+                                            <li>
+                                                <a href="{% url 'blog:admin:category_posts' category.id %}" class="sub-slide-item">
+                                                    {{ category.name }}
+                                                </a>
+                                            </li>
+                                        {% else %}
+                                            <li>
+                                                <a href="{% url 'blog:admin:category_edit' category.id %}" class="sub-slide-item">
+                                                    {{ category.name }}
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                        {% comment %} <li>
+                                            <a href="{% url 'blog:category_edit' category.id %}" class="sub-slide-item">
+                                                {{ category.name }}
+                                            </a>
+                                        </li> {% endcomment %}
+                                    </ul>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a href="{% url 'blog:admin:category_list' %}" class="slide-item">فهرست</a>
+                                </li>
+                            {% endif %}
+                            <li>
+                                <a href="{% url 'blog:admin:category_full_hierarchy' %}" class="slide-item">سلسله‌مراتب کامل</a>
+                            </li>
+                            {% comment %} <li class="sub-slide">
+                                <a class="sub-side-menu__item" data-bs-toggle="sub-slide" href="javascript:void(0)">
+                                    <span class="sub-side-menu__label">Avatars</span>
+                                    <i class="sub-angle fe fe-chevron-right"></i>
+                                </a>
+                                <ul class="sub-slide-menu">
+                                    <li><a href="avatarsquare.html" class="sub-slide-item"> Avatar-Square</a></li>
+                                    <li><a href="avatar-round.html" class="sub-slide-item"> Avatar-Rounded</a></li>
+                                    <li><a href="avatar-radius.html" class="sub-slide-item"> Avatar-Radius</a></li>
+                                </ul>
+                            </li> {% endcomment %}
+                        </ul>
+                    </li>
+                    <li class="slide">
+                        <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)">
+                            <i class="side-menu__icon fa fa-newspaper-o"></i>
+                            <span class="side-menu__label">پست</span>
+                            <i class="angle fe fe-chevron-right"></i>
+                        </a>
+                        <ul class="slide-menu">
+                            <li>
+                                <a href="{% url 'blog:admin:post_create' %}" class="slide-item">ایجاد پست</a>
+                            </li>
+                            {% if post %}
+                                <li class="sub-slide">
+                                    <a class="sub-side-menu__item" data-bs-toggle="sub-slide" href="{% url 'blog:admin:post_list' %}">
+                                        <span class="sub-side-menu__label">فهرست</span>
+                                        <i class="sub-angle fe fe-chevron-right"></i>
+                                    </a>
+                                    <ul class="sub-slide-menu">
+                                        {% if details %}
+                                            <li>
+                                                <a href="{% url 'blog:admin:post_details' post.id %}" class="sub-slide-item">
+                                                    {{ post.title }}
+                                                </a>
+                                            </li>
+                                        {% else %}
+                                            <li>
+                                                <a href="{% url 'blog:admin:post_edit' post.id %}" class="sub-slide-item">
+                                                    {{ post.title }}
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                        <li>
+                                            <a href="{% url 'blog:admin:post_list_publish' %}" class="sub-slide-item">
+                                                پست‌های منتشر شده
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{% url 'blog:admin:post_list_archive' %}" class="sub-slide-item">
+                                                پست‌های آرشیو شده
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a href="{% url 'blog:admin:post_list' %}" class="slide-item">فهرست</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'blog:admin:post_list_publish' %}" class="slide-item">پست‌های منتشر شده</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'blog:admin:post_list_archive' %}" class="slide-item">پست‌های آرشیو شده</a>
+                                </li>
+                            {% endif %}
+                            {% comment %} <li class="sub-slide">
+                                <a class="sub-side-menu__item" data-bs-toggle="sub-slide" href="javascript:void(0)">
+                                    <span class="sub-side-menu__label">Avatars</span>
+                                    <i class="sub-angle fe fe-chevron-right"></i>
+                                </a>
+                                <ul class="sub-slide-menu">
+                                    <li><a href="avatarsquare.html" class="sub-slide-item"> Avatar-Square</a></li>
+                                    <li><a href="avatar-round.html" class="sub-slide-item"> Avatar-Rounded</a></li>
+                                    <li><a href="avatar-radius.html" class="sub-slide-item"> Avatar-Radius</a></li>
+                                </ul>
+                            </li> {% endcomment %}
+                        </ul>
+                    </li>
+                    <li class="slide">
+                        <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)">
+                            <i class="side-menu__icon bi bi-signpost-split"></i>
+                            <span class="side-menu__label">تگ</span>
+                            <i class="angle fe fe-chevron-right"></i>
+                        </a>
+                        <ul class="slide-menu">
+                            <li>
+                                <a href="{% url 'blog:admin:tag_create' %}" class="slide-item">ایجاد تگ</a>
+                            </li>
+                            {% if tag %}
+                                <li class="sub-slide">
+                                    <a class="sub-side-menu__item" data-bs-toggle="sub-slide" href="javascript:void(0)">
+                                        <span class="sub-side-menu__label">فهرست</span>
+                                        <i class="sub-angle fe fe-chevron-right"></i>
+                                    </a>
+                                    <ul class="sub-slide-menu">
+                                        {% if posts %}
+                                            <li>
+                                                <a href="{% url 'blog:admin:tag_posts' tag.id %}" class="sub-slide-item">
+                                                    {{ tag.name }}
+                                                </a>
+                                            </li>
+                                        {% else %}
+                                            <li>
+                                                <a href="{% url 'blog:admin:tag_edit' tag.id %}" class="sub-slide-item">
+                                                    {{ tag.name }}
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                        {% comment %} <li>
+                                            <a href="{% url 'blog:category_edit' category.id %}" class="sub-slide-item">
+                                                {{ category.name }}
+                                            </a>
+                                        </li> {% endcomment %}
+                                    </ul>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a href="{% url 'blog:admin:tag_list' %}" class="slide-item">فهرست</a>
+                                </li>
+                            {% endif %}
+                            {% comment %} <li class="sub-slide">
+                                <a class="sub-side-menu__item" data-bs-toggle="sub-slide" href="javascript:void(0)">
+                                    <span class="sub-side-menu__label">Avatars</span>
+                                    <i class="sub-angle fe fe-chevron-right"></i>
+                                </a>
+                                <ul class="sub-slide-menu">
+                                    <li><a href="avatarsquare.html" class="sub-slide-item"> Avatar-Square</a></li>
+                                    <li><a href="avatar-round.html" class="sub-slide-item"> Avatar-Rounded</a></li>
+                                    <li><a href="avatar-radius.html" class="sub-slide-item"> Avatar-Radius</a></li>
+                                </ul>
+                            </li> {% endcomment %}
+                        </ul>
+                    </li>
+                {% endif %}
+            </ul>
+            <div class="slide-right" id="slide-right">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191"
+                     width="24" height="24" viewBox="0 0 24 24">
+                    <path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+    <!--/APP-SIDEBAR-->
+</div>

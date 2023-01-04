@@ -14,8 +14,8 @@ class Process(models.Model):
 
 class Pages(models.Model):
     size = models.IntegerField()
-    status = models.BooleanField(default=False)
-    process = models.ForeignKey(Process, on_delete=models.CASCADE,null=True,blank=True)
+    status = models.BooleanField()
+    process = models.ForeignKey(Process, on_delete=models.CASCADE)
 
 
 class Memory(models.Model):
