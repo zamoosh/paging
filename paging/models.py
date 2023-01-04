@@ -18,5 +18,5 @@ class Pages(models.Model):
     process = models.ForeignKey(Process, on_delete=models.CASCADE)
 
 
-class Memory(models.Model):
+class Memory(models.Model): # ali
     size = models.IntegerField()
