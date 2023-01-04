@@ -1,0 +1,139 @@
+<!doctype html>{% load static %}
+<html lang="fa" dir="rtl">
+<head>
+
+    <!-- META DATA -->
+    <meta charset="UTF-8">
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Sash – Bootstrap 5  Admin & Dashboard Template">
+    <meta name="author" content="Spruko Technologies Private Limited">
+    <meta name="keywords" content="admin,admin dashboard,admin panel,admin template,bootstrap,clean,dashboard,flat,jquery,modern,responsive,premium admin templates,responsive admin,ui,ui kit.">
+
+    <!-- FAVICON -->
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/images/brand/favicon.ico' %}" />
+
+    <!-- TITLE -->
+    <title>ویدان‌پلاس - {% block title %}{% endblock %}</title>
+
+    <!-- BOOTSTRAP CSS -->
+    <link id="style" href="{% static 'assets/plugins/bootstrap/css/bootstrap.min.css' %}"  rel="stylesheet" />
+
+    <!-- STYLE CSS -->
+    <link href="{% static 'assets/css/style.css' %}"  rel="stylesheet" />
+    <link href="{% static 'assets/css/dark-style.css' %}"  rel="stylesheet" />
+    <link href="{% static 'assets/css/transparent-style.css' %}"  rel="stylesheet">
+    <link href="{% static 'assets/css/skin-modes.css' %}"  rel="stylesheet" />
+
+    <!--- FONT-ICONS CSS -->
+    <link href="{% static 'assets/css/icons.css' %}"  rel="stylesheet" />
+
+    <!-- COLOR SKIN CSS -->
+    <link id="theme" rel="stylesheet" type="text/css" media="all" href="{% static 'assets/colors/color1.css' %}" />
+
+    <!-- TOASTIFY JS -->
+    <link rel="stylesheet" href="{% static 'assets/plugins/toastify/toastify.css' %}">
+
+    <!-- CUSTOM IRANSANSX FONTS -->
+    <link rel="stylesheet" href="{% static 'assets/css/font_style.css' %}">
+
+    <!-- CUSTOM HEIGHT SIZING -->
+    <link rel="stylesheet" href="{% static 'assets/css/vh_sizing.css' %}">
+
+
+    {% block css %}{% endblock %}
+
+</head>
+
+<body class="app sidebar-mini rtl {% if request.user.extra.dark_mode %}dark-mode{% endif %}">
+
+    <!-- PAGE -->
+    <div class="page">
+        <div class="page-main">
+            <!--app-content open-->
+            {% block body %}{% endblock %}
+            <!--app-content close-->
+        </div>
+    </div>
+
+    <!-- JQUERY JS -->
+    <script src="{% static 'assets/js/jquery.min.js' %}"></script>
+
+    <!-- BOOTSTRAP JS -->
+    <script src="{% static 'assets/plugins/bootstrap/js/popper.min.js' %}"></script>
+    <script src="{% static 'assets/plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+
+    <!-- SIDEBAR JS -->
+    {% comment %}
+    <script src="{% static 'assets/plugins/sidebar/sidebar.js' %}"></script>
+    {% endcomment %}
+
+
+    <!-- Perfect SCROLLBAR JS-->
+    <script src="{% static 'assets/plugins/p-scroll/perfect-scrollbar.js' %}"></script>
+    <script src="{% static 'assets/plugins/p-scroll/pscroll.js' %}"></script>
+
+    <!-- INTERNAL SELECT2 JS -->
+    <script src="{% static 'assets/plugins/select2/select2.full.min.js' %}"></script>
+
+    <!-- Sticky js -->
+    <script src="{% static 'assets/js/sticky.js' %}"></script>
+
+    <!-- SIDEBAR JS -->
+    <script src="{% static 'assets/plugins/sidebar/sidebar.js' %}"></script>
+
+    <!-- SIDE-MENU JS-->
+    <script src="{% static 'assets/plugins/sidemenu/sidemenu.js' %}"></script>
+
+    <!-- SWEET-ALERT JS -->
+    <script src="{% static 'assets/plugins/sweet-alert/sweetalert.min.js' %}"></script>
+    <script src="{% static 'assets/js/sweet-alert.js' %}"></script>
+
+    <!-- TOASTIFY JS -->
+    <script src="{% static 'assets/plugins/toastify/toastify.js' %}"></script>
+
+    <script>
+        let lay_out_set = $('.light-layout, .dark-layout');
+        lay_out_set.on('click', function () {
+            $(this).addClass('active');
+            lay_out_set.not($(this)).removeClass('active');
+            let text = '';
+            let mode = 'dark';
+            text = 'تم تاریک شد'
+            if ($(this).hasClass('light-layout')) {
+                text = 'تم روشن شد'
+                mode = 'light';
+            }
+            $.ajax({
+                url: '{% url 'client:api_select_theme' %}',
+                type: 'GET',
+                data: {'mode': mode},
+                success: function () {
+                    Toastify({
+                        text: text,
+                        duration: 1500,
+                        newWindow: true,
+                        close: true,
+                        gravity: 'top', // `top` or `bottom`
+                        position: 'center', // `left`, `center` or `right`
+                        stopOnFocus: true, // Prevents dismissing of toast on hover
+                        style: {
+                            background: 'rgb(108,95,252)',
+                        },
+                        onClick: function () {} // Callback after click
+                    }).showToast();
+                },
+            });
+        });
+    </script>
+
+    {% block js %}{% endblock %}
+
+    <!-- Sticky js -->
+    <script src="{% static 'assets/js/select2.js' %}"></script>
+
+    <!-- CUSTOM JS -->
+    <script src="{% static 'assets/js/custom.js' %}"></script>
+</body>
+
+</html>
