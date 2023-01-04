@@ -24,9 +24,9 @@
             datatable.DataTable({
                 order: [],
                 // order: [[0, 'desc']],
-                // columnDefs: [
-                //     {orderable: false, targets: -1}
-                // ],
+                columnDefs: [
+                    {orderable: false, targets: -1}
+                ],
                 dom: 'Bfrtip',
                 buttons: [
                     'copy', 'csv', 'excel', 'pdf', 'print'
@@ -99,16 +99,31 @@
                                     <table class="table text-nowrap border-bottom" id="super">
                                         <thead>
                                             <tr>
-                                                <th class="wd-15p border-bottom-0">Proc</th>
-                                                <th class="wd-10p border-bottom-0 d-none d-sm-table-cell">time</th>
+                                                <th class="wd-15p border-bottom-0">time</th>
+                                                <th class="wd-10p border-bottom-0 d-none d-sm-table-cell">total memory</th>
+                                                <th class="wd-10p border-bottom-0 d-none d-md-table-cell">left memory</th>
                                                 <th class="wd-10p border-bottom-0 d-none d-md-table-cell">used memory</th>
-                                                <th class="wd-10p border-bottom-0 d-none d-md-table-cell">left time</th>
-                                                <th class="wd-10p border-bottom-0 d-none d-md-table-cell">status</th>
-                                                {% comment %} <th class="wd-10p border-bottom-0">بیشتر</th> {% endcomment %}
+                                                 <th class="wd-10p border-bottom-0">processes</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {% for post in page.objects %}
+                                            {% for log in main_log %}
+                                                <tr>
+                                                    <td class="align-middle fs-15">{{ log.time }}</td>
+                                                    <td class="align-middle d-none d-sm-table-cell fs-15">{{ log.total_memory }}</td>
+                                                    <td class="align-middle d-none d-md-table-cell fs-15">{{ log.left_memory }}</td>
+                                                    <td class="align-middle d-none d-md-table-cell fs-15">{{ log.used_memory }}</td>
+                                                    <td class="align-middle">
+                                                        <a type="button" href="javascript:void(0)"
+                                                                class="btn rounded-circle border-0 bg-transparent text-primary"
+                                                                style="padding: 4px"
+                                                                aria-expanded="false">VISIT
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+
+                                            {% comment %}{% for post in page.objects %}
                                                 <tr>
                                                     <td class="align-middle fs-15">{{ post.title }}</td>
                                                     <td class="align-middle d-none d-sm-table-cell fs-15">{{ post.create_at }}</td>
@@ -145,7 +160,7 @@
                                                         </div>
                                                     </td>
                                                 </tr>
-                                            {% endfor %}
+                                            {% endfor %}{% endcomment %}
                                         </tbody>
                                     </table>
                                     {% include 'admin/pagination.html' %}
