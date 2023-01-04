@@ -25,6 +25,7 @@ class Index(View):
         not_completed = Process.objects.exclude(status__icontains='D').exists()
         time = 0
         main_log = []
+        logs = []
         while not_completed:
             for process in process_array:
                 if process.status == "D":
@@ -34,17 +35,19 @@ class Index(View):
                     process.duration -= 1
                 if process.duration == 0:
                     process.status = "D"
-                if memory_object.left_page > page_per_process and process.status == "NS":
+                    memory_object.left_page += process.page_count
+                if memory_object.left_page >= page_per_process and process.status == "NS":
                     process.page_count = page_per_process
                     memory_object.left_page -= page_per_process
                     process.status = "P"
 
             Process.clear_table()
             process_array = Process.update_process(process_array)
-            Log.objects.create(
-                time=time,
-                content=Process.get_json_data()
-            )
+            logs.append(Log(time=time, content=Process.get_json_data()))
+            # Log.objects.create(
+            #     time=time,
+            #     content=Process.get_json_data()
+            # )
             time_log = {
                 'time': time,
                 'left_memory': memory_object.left_page * memory_object.page_size,
@@ -55,19 +58,21 @@ class Index(View):
 
             time += 1
             not_completed = Process.objects.exclude(status__icontains='D').exists()
-            if not not_completed:
-                memory_object.left_page = memory_object.page_count
-                Log.objects.create(
-                    time=time,
-                    content=Process.get_json_data()
-                )
-                time_log = {
-                    'time': time,
-                    'left_memory': memory_object.left_page * memory_object.page_size,
-                    'total_memory': memory_object.size,
-                    'used_memory': (memory_object.page_count - memory_object.left_page) * memory_object.page_size
-                }
-                main_log.append(time_log)
+            # if not not_completed:
+            #     memory_object.left_page = memory_object.page_count
+            #     logs.append(Log(time=time, content=Process.get_json_data()))
+            #     # Log.objects.create(
+            #     #     time=time,
+            #     #     content=Process.get_json_data()
+            #     # )
+            #     time_log = {
+            #         'time': time,
+            #         'left_memory': memory_object.left_page * memory_object.page_size,
+            #         'total_memory': memory_object.size,
+            #         'used_memory': (memory_object.page_count - memory_object.left_page) * memory_object.page_size
+            #     }
+            #     main_log.append(time_log)
 
+        Log.objects.bulk_create(logs)
         context['main_log'] = main_log
         return render(request, 'process_list.html', context)
