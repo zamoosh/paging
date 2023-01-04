@@ -1,0 +1,79 @@
+{% load i18n %}
+<ul class="pagination">
+    {% if page.objects.has_other_pages %}
+        {% if page.objects.number != page.objects.paginator.page_range.0 %}
+            <li class="page-item">
+                <a class="page-link" href="{{ page.page_url }}?page_number={{ page.objects.paginator.page_range.0 }}">
+                    {% trans 'first' %}
+                </a>
+            </li>
+        {% endif %}
+
+        <!-- current - 3 -->
+        {% if page.objects.number|add:-3 in page.objects.paginator.page_range and page.objects.number|add:-3 != page.objects.paginator.page_range.0 %}
+            <li class="page-item">
+                <a class="page-link">. . . </a>
+            </li>
+        {% endif %}
+
+        <!-- current - 2 -->
+        {% if page.objects.number|add:-2 in page.objects.paginator.page_range  and page.objects.number|add:-2 != page.objects.paginator.page_range.0 %}
+            <li class="page-item">
+                <a class="page-link" href="{{ page.page_url }}?page_number={{ page.objects.number|add:-2 }}">
+                    {{ page.objects.number|add:-2 }}
+                </a>
+            </li>
+        {% endif %}
+
+        <!-- current - 1 -->
+        {% if page.objects.number|add:-1 in page.objects.paginator.page_range and page.objects.number|add:-1 != page.objects.paginator.page_range.0 %}
+            <li class="page-item">
+                <a class="page-link" href="{{ page.page_url }}?page_number={{ page.objects.previous_page_number }}">
+                    {{ page.objects.number|add:-1 }}
+                </a>
+            </li>
+        {% endif %}
+
+        <!-- current -->
+        <li class="page-item">
+            <a class="page-link bg-cyan" href="{{ page.page_url }}?page_number={{ page.objects.number }}">
+                {{ page.objects.number }}
+            </a>
+        </li>
+
+        <!-- current + 1 -->
+        {% if page.objects.number|add:1 in page.objects.paginator.page_range and page.objects.number|add:1 != page.objects.paginator.num_pages %}
+            <li class="page-item">
+                <a class="page-link" href="{{ page.page_url }}?page_number={{ page.objects.next_page_number }}">
+                    {{ page.objects.number|add:1 }}
+                </a>
+            </li>
+        {% endif %}
+
+        <!-- current + 2 -->
+        {% if page.objects.number|add:2 in page.objects.paginator.page_range and page.objects.number|add:2 != page.objects.paginator.num_pages %}
+            <li class="page-item">
+                <a class="page-link" href="{{ page.page_url }}?page_number={{ page.objects.number|add:2 }}">
+                    {{ page.objects.number|add:2 }}
+                </a>
+            </li>
+        {% endif %}
+
+        <!-- current + 3 -->
+        {% if page.objects.number|add:+3 in page.objects.paginator.page_range and page.objects.number|add:+3 != page.objects.paginator.num_pages %}
+            <li class="page-item">
+                <a class="page-link">. . . </a>
+            </li>
+        {% endif %}
+
+        <!-- last -->
+        {% if page.objects.number != page.objects.paginator.num_pages %}
+            <li class="page-item">
+                <a class="page-link" href="{{ page.page_url }}?page_number={{ page.objects.paginator.num_pages }}">
+                    {% trans 'last' %} {% comment %}{{ page.objects.paginator.num_pages }}{% endcomment %}
+                </a>
+            </li>
+        {% endif %}
+    {% endif %}
+
+</ul>
