@@ -8,18 +8,42 @@
     <script src="{% static 'assets/plugins/jquery-form-validator/jquery.validate.js' %}"></script>
     <script>
         $(document).ready(function () {
+            let memory = document.getElementById('memory');
+            let page_size = document.getElementById('page_size');
+
             // add a validate method
+            $.validator.addMethod('page_less', function () {
+                return Number(memory.value) >= Number(page_size.value);
+
+            }, 'memory must be bigger than page');
 
             $('form').validate({
                 rules: {
                     memory: {
                         required: true,
+                        page_less: true,
+                        digits: true
                     },
                     page_size: {
                         required: true,
+                        max: 500,
+                        page_less: true,
+                        digits: true
                     }
                 },
-                messages: {}
+                messages: {
+                    page_size: {
+                        max: 'max value of page is 500 kb'
+                    }
+                }
+            });
+
+            memory.addEventListener('change', function () {
+
+            });
+
+            page_size.addEventListener('change', function () {
+
             });
         });
     </script>
@@ -78,7 +102,6 @@
                                                     <span class="text-red">*</span>
                                                 </label>
                                                 <input type="number"
-                                                       dir="ltr"
                                                        name="memory"
                                                        id="memory"
                                                        class="form-control"
@@ -92,7 +115,6 @@
                                                     <span class="text-red">*</span>
                                                 </label>
                                                 <input type="number"
-                                                       dir="ltr"
                                                        name="page_size"
                                                        id="page_size"
                                                        class="form-control"
