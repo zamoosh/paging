@@ -7,7 +7,7 @@ class Index(View):
 
     def post(self, request):
         Process.clear_table()
-        ProcessesPerSecond.clear_table()
+        Log.clear_table()
 
         memory = int(request.POST.get('memory'))
         page_size = int(request.POST.get('page_size'))
@@ -23,6 +23,8 @@ class Index(View):
         time = 0
         while not_completed:
             for process in process_array:
+                if process.status == "D":
+                    continue
                 page_per_process = math.ceil(process.memory / page_size)
                 if process.status == "P":
                     process.duration -= 1
@@ -35,7 +37,7 @@ class Index(View):
 
             Process.clear_table()
             process_array = Process.update_process(process_array)
-            ProcessesPerSecond.objects.create(
+            Log.objects.create(
                 time=time,
                 content=Process.get_json_data()
             )
