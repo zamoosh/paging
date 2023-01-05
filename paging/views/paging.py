@@ -61,6 +61,9 @@ def paging(request):
         context['total_memory'] = memory_object.size
         context['page_count'] = memory_object.page_count
         context['page_size'] = memory_object.page_size
+        context['process_count'] = Process.process_count
+        context['total_duration'] = time
+        memory_object.save()
         return render(request, 'time_list.html', context)
 
     return render(request, 'paging.html')

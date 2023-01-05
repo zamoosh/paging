@@ -80,7 +80,7 @@
                                 </a>
                             {% endif %}
                         </h1> {% endcomment %}
-                        <h1 class="page-title px-2">{{ log.type }} result</h1>
+                        <h1 class="page-title px-2 fw-bold text-uppercase">{{ log.type }} Result</h1>
                     </div>
                     <div>
                         <ol class="breadcrumb mx-2">
@@ -91,13 +91,63 @@
                         </ol>
                     </div>
                 </div>
-                <div class="col-12">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et, hic incidunt libero modi nam nemo
-                    neque perferendis sint suscipit vero? Accusantium consequatur incidunt modi officiis quia repellat
-                    suscipit veritatis, voluptate.
-                    <h4>
-                        process count: {{ log.get_len }}
-                    </h4>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title fw-bold">
+                                    Current Time
+                                    <span class="text-primary">{{ log.time }}</span>
+                                </h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-4 mb-4">
+                                        <h5 class="fw-bold">
+                                            Memory Capacity:
+                                            <span class="text-primary">
+                                                {{ memory.size }} KB
+                                            </span>
+                                        </h5>
+                                    </div>
+                                    <div class="col-4 mb-4">
+                                        <h5 class="fw-bold">
+                                            Process Count:
+                                            <span class="text-primary">
+                                                {{ process_count }}
+                                            </span>
+                                        </h5>
+                                    </div>
+                                    <div class="col-4 mb-4">
+                                        <h5 class="fw-bold">
+                                            Total Duration:
+                                            <span class="text-primary">
+                                                {{ log.get_len }} s
+                                            </span>
+                                        </h5>
+                                    </div>
+                                    {% if log.type.lower == 'paging' %}
+                                        <div class="col-4 mb-4">
+                                            <h5 class="fw-bold">
+                                                Page Count:
+                                                <span class="text-primary">
+                                                    {{ memory.page_count }}
+                                                </span>
+                                            </h5>
+                                        </div>
+                                        <div class="col-4 mb-4">
+                                            <h5 class="fw-bold">
+                                                Page Size:
+                                                <span class="text-primary">
+                                                    {{ memory.page_size }} KB
+                                                </span>
+                                            </h5>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <!-- PAGE-HEADER END -->
 
@@ -110,68 +160,25 @@
                                     <table class="table text-nowrap border-bottom" id="super">
                                         <thead>
                                             <tr>
-                                                <th class="wd-15p border-bottom-0">Status</th>
+                                                <th class="wd-15p border-bottom-0">#</th>
+                                                <th class="wd-10p border-bottom-0 d-none d-sm-table-cell">status</th>
                                                 <th class="wd-10p border-bottom-0 d-none d-sm-table-cell">used memory</th>
                                                 <th class="wd-10p border-bottom-0 d-none d-md-table-cell">start time</th>
                                                 <th class="wd-10p border-bottom-0 d-none d-md-table-cell">left time</th>
-                                                <th class="wd-10p border-bottom-0">processes</th>
+                                                <th class="wd-10p border-bottom-0 d-none d-md-table-cell">diration</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {% for p in log.content %}
                                                 <tr>
-                                                    <td class="align-middle fs-15">{{ p.status }}</td>
+                                                    <td class="align-middle fs-15">{{ forloop.counter }}</td>
+                                                    <td class="align-middle d-none d-sm-table-cell fs-15">{{ p.status }}</td>
                                                     <td class="align-middle d-none d-sm-table-cell fs-15">{{ p.memory }}</td>
                                                     <td class="align-middle d-none d-md-table-cell fs-15">{{ p.start_time }}</td>
                                                     <td class="align-middle d-none d-md-table-cell fs-15">{{ p.left_time }}</td>
-                                                    <td class="align-middle">
-                                                        <a type="button" href="javascript:void(0)"
-                                                                class="btn rounded-circle border-0 bg-transparent"
-                                                                style="padding: 4px"
-                                                                aria-expanded="false">VISIT
-                                                        </a>
-                                                    </td>
+                                                    <td class="align-middle d-none d-md-table-cell fs-15">{{ p.init_duration }}</td>
                                                 </tr>
                                             {% endfor %}
-
-                                            {% comment %}{% for post in page.objects %}
-                                                <tr>
-                                                    <td class="align-middle fs-15">{{ post.title }}</td>
-                                                    <td class="align-middle d-none d-sm-table-cell fs-15">{{ post.create_at }}</td>
-                                                    <td class="align-middle d-none d-md-table-cell fs-15">{{ post.author.get_full_name }}</td>
-                                                    <td class="align-middle d-none d-md-table-cell fs-15">
-                                                        {% if post.publish %}
-                                                            <span class="text-success">انتشار</span>
-                                                        {% else %}
-                                                            <span class="text-danger">آرشیو</span>
-                                                        {% endif %}
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <div class="btn-group">
-                                                            <button type="button"
-                                                                    class="btn rounded-circle border-0 bg-transparent text-white"
-                                                                    data-bs-toggle="dropdown"
-                                                                    style="padding: 4px"
-                                                                    aria-expanded="false">
-                                                                <i class="bi bi-three-dots fs-15"></i>
-                                                            </button>
-                                                            <ul class="dropdown-menu p-0" role="menu">
-                                                                <li>
-                                                                    <a class="py-3 px-4" href="{% url 'blog:admin:post_edit' post.id %}">ویرایش</a>
-                                                                </li>
-                                                                <li class="divider m-0"></li>
-                                                                <li>
-                                                                    <a class="py-3 px-4" href="{% url 'blog:admin:post_details' post.id %}">مشاهده</a>
-                                                                </li>
-                                                                <li class="divider m-0"></li>
-                                                                <li>
-                                                                    <a class="py-3 px-4" href="{% url 'blog:post_details' post.id %}">مشاهده در سایت</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            {% endfor %}{% endcomment %}
                                         </tbody>
                                     </table>
                                     {% include 'admin/pagination.html' %}

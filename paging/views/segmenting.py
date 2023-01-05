@@ -31,6 +31,7 @@ def segmenting(request):
                 if memory_object.left_memory >= process.memory and process.status == "NS":
                     memory_object.left_memory -= process.memory
                     process.status = "P"
+                    process.start_time = time
 
             Process.clear_table()
             process_array = Process.update_process(process_array)
@@ -48,6 +49,10 @@ def segmenting(request):
         Log.objects.bulk_create(logs)
         context['main_log'] = main_log
         context['algorithm'] = 'Segmenting'
+        context['total_memory'] = memory_object.size
+        context['process_count'] = Process.process_count
+        context['total_duration'] = time
+        memory_object.save()
         return render(request, 'time_list.html', context)
 
     return render(request, 'segmenting.html')
