@@ -5,4 +5,4 @@ class ProcessList(View):
 
     @staticmethod
     def get(request):
-        return render(request, 'process_list.html')
+        return render(request, 'time_list.html')

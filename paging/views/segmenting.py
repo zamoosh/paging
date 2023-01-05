@@ -34,11 +34,7 @@ def segmenting(request):
 
             Process.clear_table()
             process_array = Process.update_process(process_array)
-            logs.append(Log(time=time, content=Process.get_json_data()))
-            # Log.objects.create(
-            #     time=time,
-            #     content=Process.get_json_data()
-            # )
+            logs.append(Log(time=time, content=Process.get_json_data(), type='segmenting'))
             time_log = {
                 'time': time,
                 'left_memory': memory_object.left_memory,
@@ -52,6 +48,6 @@ def segmenting(request):
         Log.objects.bulk_create(logs)
         context['main_log'] = main_log
         context['algorithm'] = 'Segmenting'
-        return render(request, 'process_list.html', context)
+        return render(request, 'time_list.html', context)
 
     return render(request, 'segmenting.html')

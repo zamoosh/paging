@@ -65,11 +65,11 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Select your algorithm</h3>
+                                <h3 class="card-title fw-bold">Select your algorithm</h3>
                             </div>
                             <div class="card-body">
                                 <div class="panel panel-primary">
-                                    <div class="tab-menu-heading  mb-4">
+                                    <div class="tab-menu-heading mb-4">
                                         <div class="tabs-menu">
                                             <!-- Tabs -->
                                             <ul class="nav panel-tabs">
@@ -85,6 +85,19 @@
                                                     {% csrf_token %}
                                                     <div class="row">
                                                         <div class="col-12">
+                                                            {% comment %} <div class="form-group">
+                                                                <label class="custom-control custom-checkbox-md">
+                                                                    <input type="checkbox"
+                                                                           class="custom-control-input"
+                                                                           name="database"
+                                                                           id="database"
+                                                                           value="True">
+                                                                    <span class="custom-control-label fw-bold">
+                                                                        <span class="text-danger">Delete</span>
+                                                                        the database
+                                                                    </span>
+                                                                </label>
+                                                            </div> {% endcomment %}
                                                             <div class="form-group">
                                                                 <label class="form-label" for="memory">
                                                                     Total memory size
@@ -97,9 +110,9 @@
                                                                        placeholder="number in KB">
                                                             </div>
                                                         </div>
-                                                        <div class="col-12">
+                                                        <div class="col-12 d-flex justify-content-end">
                                                             <button type="submit"
-                                                                    class="btn btn-primary">
+                                                                    class="btn btn-primary fw-bold">
                                                                 submit
                                                             </button>
                                                         </div>

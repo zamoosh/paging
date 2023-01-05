@@ -91,35 +91,81 @@
                         </ol>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title fw-bold">
+                                    Preferences
+                                </h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <h5 class="fw-bold">
+                                            Memory Capacity:
+                                            <span class="text-primary">
+                                                {{ total_memory }} KB
+                                            </span>
+                                        </h5>
+                                    </div>
+                                    <div class="col-4">
+                                        <h5 class="fw-bold">
+                                            Page Count:
+                                            <span class="text-primary">
+                                                {{ page_count }}
+                                            </span>
+                                        </h5>
+                                    </div>
+                                    <div class="col-4">
+                                        <h5 class="fw-bold">
+                                            Page Size:
+                                            <span class="text-primary">
+                                                {{ page_size }} KB
+                                            </span>
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!-- PAGE-HEADER END -->
 
                 <!-- write your code here -->
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title fw-bold">
+                                    Time Log Table
+                                </h3>
+                            </div>
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table text-nowrap border-bottom" id="super">
+                                    {% if algorithm == 'Paging' %}
+                                        <table class="table text-nowrap border-bottom" id="super">
                                         <thead>
                                             <tr>
                                                 <th class="wd-15p border-bottom-0">time</th>
-                                                <th class="wd-10p border-bottom-0 d-none d-sm-table-cell">total memory</th>
-                                                <th class="wd-10p border-bottom-0 d-none d-md-table-cell">left memory</th>
                                                 <th class="wd-10p border-bottom-0 d-none d-md-table-cell">used memory</th>
+                                                <th class="wd-10p border-bottom-0 d-none d-md-table-cell">left memory</th>
+                                                <th class="wd-10p border-bottom-0 d-none d-md-table-cell">used page</th>
+                                                <th class="wd-10p border-bottom-0 d-none d-md-table-cell">left page</th>
                                                 <th class="wd-10p border-bottom-0">processes</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-
                                             {% for log in main_log %}
-                                                <tr>
+                                                <tr {% if log.time == 0 %}style="background-color: #2c00ff17"{% endif %}>
                                                     <td class="align-middle fs-15">{{ log.time }}</td>
-                                                    <td class="align-middle d-none d-sm-table-cell fs-15">{{ log.total_memory }}</td>
-                                                    <td class="align-middle d-none d-md-table-cell fs-15">{{ log.left_memory }}</td>
                                                     <td class="align-middle d-none d-md-table-cell fs-15">{{ log.used_memory }}</td>
+                                                    <td class="align-middle d-none d-md-table-cell fs-15">{{ log.left_memory }}</td>
+                                                    <td class="align-middle d-none d-md-table-cell fs-15">{{ log.used_page }}</td>
+                                                    <td class="align-middle d-none d-md-table-cell fs-15">{{ log.left_page }}</td>
                                                     <td class="align-middle">
-                                                        <a type="button" href="javascript:void(0)"
-                                                                class="btn rounded-circle border-0 bg-transparent text-primary"
+                                                        <a type="button" href="{% url 'paging:process_log' log.time %}"
+                                                                class="btn rounded-circle border-0 bg-transparent"
                                                                 style="padding: 4px"
                                                                 aria-expanded="false">VISIT
                                                         </a>
@@ -167,7 +213,75 @@
                                             {% endfor %}{% endcomment %}
                                         </tbody>
                                     </table>
-                                    {% include 'admin/pagination.html' %}
+                                    {% elif algorithm == 'Segmentation' %}
+                                        <table class="table text-nowrap border-bottom" id="super">
+                                        <thead>
+                                            <tr>
+                                                <th class="wd-15p border-bottom-0">time</th>
+                                                <th class="wd-10p border-bottom-0 d-none d-sm-table-cell">total memory</th>
+                                                <th class="wd-10p border-bottom-0 d-none d-md-table-cell">left memory</th>
+                                                <th class="wd-10p border-bottom-0 d-none d-md-table-cell">used memory</th>
+                                                <th class="wd-10p border-bottom-0">processes</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for log in main_log %}
+                                                <tr {% if log.time == 0 %}style="background-color: #2c00ff17"{% endif %}>
+                                                    <td class="align-middle fs-15">{{ log.time }}</td>
+                                                    <td class="align-middle d-none d-sm-table-cell fs-15">{{ log.total_memory }}</td>
+                                                    <td class="align-middle d-none d-md-table-cell fs-15">{{ log.left_memory }}</td>
+                                                    <td class="align-middle d-none d-md-table-cell fs-15">{{ log.used_memory }}</td>
+                                                    <td class="align-middle">
+                                                        <a type="button" href="{% url 'paging:process_log' log.time %}"
+                                                                class="btn rounded-circle border-0 bg-transparent"
+                                                                style="padding: 4px"
+                                                                aria-expanded="false">VISIT
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                            {% comment %}{% for post in page.objects %}
+                                                <tr>
+                                                    <td class="align-middle fs-15">{{ post.title }}</td>
+                                                    <td class="align-middle d-none d-sm-table-cell fs-15">{{ post.create_at }}</td>
+                                                    <td class="align-middle d-none d-md-table-cell fs-15">{{ post.author.get_full_name }}</td>
+                                                    <td class="align-middle d-none d-md-table-cell fs-15">
+                                                        {% if post.publish %}
+                                                            <span class="text-success">انتشار</span>
+                                                        {% else %}
+                                                            <span class="text-danger">آرشیو</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="align-middle">
+                                                        <div class="btn-group">
+                                                            <button type="button"
+                                                                    class="btn rounded-circle border-0 bg-transparent text-white"
+                                                                    data-bs-toggle="dropdown"
+                                                                    style="padding: 4px"
+                                                                    aria-expanded="false">
+                                                                <i class="bi bi-three-dots fs-15"></i>
+                                                            </button>
+                                                            <ul class="dropdown-menu p-0" role="menu">
+                                                                <li>
+                                                                    <a class="py-3 px-4" href="{% url 'blog:admin:post_edit' post.id %}">ویرایش</a>
+                                                                </li>
+                                                                <li class="divider m-0"></li>
+                                                                <li>
+                                                                    <a class="py-3 px-4" href="{% url 'blog:admin:post_details' post.id %}">مشاهده</a>
+                                                                </li>
+                                                                <li class="divider m-0"></li>
+                                                                <li>
+                                                                    <a class="py-3 px-4" href="{% url 'blog:post_details' post.id %}">مشاهده در سایت</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}{% endcomment %}
+                                        </tbody>
+                                    </table>
+                                    {% endif %}
+
                                 </div>
                             </div>
                         </div>

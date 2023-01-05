@@ -75,4 +75,4 @@ class Index(View):
 
         Log.objects.bulk_create(logs)
         context['main_log'] = main_log
-        return render(request, 'process_list.html', context)
+        return render(request, 'time_list.html', context)

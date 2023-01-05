@@ -84,7 +84,7 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Select your algorithm</h3>
+                                <h3 class="card-title fw-bold">Select your algorithm</h3>
                             </div>
                             <div class="card-body">
                                 <div class="panel panel-primary">
@@ -103,6 +103,21 @@
                                                 <form action="" method="post" autocomplete="on">
                                                     {% csrf_token %}
                                                     <div class="row">
+                                                        {% comment %} <div class="col-12">
+                                                            <div class="form-group">
+                                                                <label class="custom-control custom-checkbox-md">
+                                                                    <input type="checkbox"
+                                                                           class="custom-control-input"
+                                                                           name="database"
+                                                                           id="database"
+                                                                           value="True">
+                                                                    <span class="custom-control-label fw-bold">
+                                                                        <span class="text-danger">Delete</span>
+                                                                        the database
+                                                                    </span>
+                                                                </label>
+                                                            </div>
+                                                        </div> {% endcomment %}
                                                         <div class="col-sm-6 col-md-6">
                                                             <div class="form-group">
                                                                 <label class="form-label" for="memory">
@@ -129,9 +144,9 @@
                                                                        placeholder="number in KB">
                                                             </div>
                                                         </div>
-                                                        <div class="col-12">
+                                                        <div class="col-12 d-flex justify-content-end">
                                                             <button type="submit"
-                                                                    class="btn btn-primary">
+                                                                    class="btn btn-primary fw-bold">
                                                                 submit
                                                             </button>
                                                         </div>
