@@ -3,8 +3,9 @@ from django.db import models
 
 class Memory(models.Model):
     size = models.IntegerField(null=True)
-    page_count = models.IntegerField(null=True)
     page_size = models.IntegerField(null=True)
+    left_memory = models.IntegerField(null=True)
+    page_count = models.IntegerField(null=True)
     left_page = models.IntegerField(null=True)
 
     @classmethod

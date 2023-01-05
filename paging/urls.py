@@ -4,6 +4,13 @@ from .views import *
 app_name = 'paging'
 
 urlpatterns = [
-    path('', Index.as_view(), name="index"),
-    path('process_list/', ProcessList.as_view(), name="process_list")
+    path('', index, name="index"),
+    path('paging/', paging, name='paging'),
+    path('segmenting/', segmenting, name='segmenting'),
+
+    path('process_list/', ProcessList.as_view(), name="process_list"),
+
+    # page not found
+    path('<url>/', index),
+    path('<str>/', index)
 ]

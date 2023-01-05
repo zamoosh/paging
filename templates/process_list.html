@@ -72,19 +72,22 @@
                 <!-- PAGE-HEADER OPTIONAL TO WRITE SOME DATA ABOUT request.user -->
                 <div class="page-header">
                     <div class="d-flex">
-                        {% comment %} <h1 class="page-title px-2">
+                         {% comment %} <h1 class="page-title px-2">
                             {% if request.META.HTTP_REFERER %}
                                 <a href="{{ request.META.HTTP_REFERER }}">
                                     <i class="fa fa-arrow-right"></i>
-                                    برگشت
+                                    Back
                                 </a>
                             {% endif %}
                         </h1> {% endcomment %}
-                        <h1 class="page-title px-2">Home</h1>
+                        <h1 class="page-title px-2">{{ algorithm }}</h1>
                     </div>
                     <div>
                         <ol class="breadcrumb mx-2">
-                            <li class="breadcrumb-item active" aria-current="page">Home</li>
+                            <li class="breadcrumb-item active" aria-current="page">{{ algorithm }}</li>
+                            <li class="breadcrumb-item">
+                                <a href="{% url 'paging:index' %}">Home</a>
+                            </li>
                         </ol>
                     </div>
                 </div>

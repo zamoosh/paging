@@ -1,21 +1,20 @@
-{% extends 'admin/base.html' %}
+{% extends 'base.html' %}
 {% load static %}
 {% block title %}{% endblock %}
-{% load jformat %}
 {% block css %}{% endblock %}
 {% block js %}{% endblock %}
 {% block body %}
 
     <!-- GLOBAL-LOADER -->
-    {% include 'admin/loader.html' %}
+    {% include 'loader.html' %}
     <!-- /GLOBAL-LOADER -->
 
     <!-- app-Header -->
-    {% include 'admin/header.html' %}
+    {% include 'header.html' %}
     <!-- /app-Header -->
 
     <!--APP-SIDEBAR-->
-    {% include 'admin/menu.html' %}
+    {% include 'menu.html' %}
 
     <!--app-content open-->
     <div class="main-content app-content mt-0">
@@ -59,18 +58,18 @@
 
     <!-- Sidebar-right -->
     {% comment %}
-    {% include 'admin/side_bar.html' %}
+    {% include 'side_bar.html' %}
     {% endcomment %}
     <!--/Sidebar-right-->
 
     <!-- Country-selector modal-->
     {% comment %}
-    {% include 'admin/country_selector.html' %}
+    {% include 'country_selector.html' %}
     {% endcomment %}
     <!-- Country-selector modal-->
 
     <!-- FOOTER -->
-    {% include 'admin/footer.html' %}
+    {% include 'footer.html' %}
     <!-- FOOTER END -->
 
     <!-- BACK-TO-TOP -->

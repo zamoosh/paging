@@ -1,46 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}Home{% endblock %}
-{% comment %}{% load jformat %}{% endcomment %}
 {% block css %}{% endblock %}
-{% block js %}
-    <!-- JQUERY FORM VALIDATOR -->
-    <script src="{% static 'assets/plugins/jquery-form-validator/jquery.validate.js' %}"></script>
-
-    <script>
-        $(document).ready(function () {
-            let memory = document.getElementById('memory');
-            let page_size = document.getElementById('page_size');
-
-            // add a validate method
-            $.validator.addMethod('page_less', function () {
-                return Number(memory.value) >= Number(page_size.value);
-
-            }, 'memory must be bigger than or equal to page');
-
-            $('form').validate({
-                rules: {
-                    memory: {
-                        required: true,
-                        page_less: true,
-                        digits: true
-                    },
-                    page_size: {
-                        required: true,
-                        max: 500,
-                        page_less: true,
-                        digits: true
-                    }
-                },
-                messages: {
-                    page_size: {
-                        max: 'max value of page is 500 kb'
-                    }
-                }
-            });
-        });
-    </script>
-{% endblock %}
+{% block js %}{% endblock %}
 {% block body %}
 
     <!-- GLOBAL-LOADER -->
@@ -81,6 +43,56 @@
                 <!-- PAGE-HEADER END -->
 
                 <!-- write your code here -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Tabs style</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="panel panel-primary">
+                                    <div class="tab-menu-heading">
+                                        <div class="tabs-menu">
+                                            <!-- Tabs -->
+                                            <ul class="nav panel-tabs">
+                                                <li><a href="#tab1" class="active" data-bs-toggle="tab">Paging</a></li>
+                                                <li><a href="#tab2" data-bs-toggle="tab">Segmentation</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="panel-body tabs-menu-body">
+                                        <div class="tab-content">
+                                            <div class="tab-pane active" id="tab1">
+                                                <p>page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes
+                                                    by accident, sometimes on purpose (injected humour and the like</p>
+                                                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et</p>
+                                            </div>
+                                            <div class="tab-pane" id="tab2">
+                                                <p> default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected
+                                                    humour and the like</p>
+                                                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et</p>
+                                            </div>
+                                            <div class="tab-pane" id="tab3">
+                                                <p>over the years, sometimes by accident, sometimes on purpose (injected humour and the like</p>
+                                                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et</p>
+                                            </div>
+                                            <div class="tab-pane" id="tab4">
+                                                <p>
+                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores aspernatur at, commodi dolore doloremque dolorum eos inventore laboriosam laborum libero obcaecati officiis quaerat quis ratione sint soluta tempore temporibus vitae.
+                                                </p>
+                                                <p>
+                                                    ali ali ali
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- COL-END -->
+                </div>
+
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
