@@ -55,8 +55,13 @@
         }
 
         /* fix the switch input in dark mode */
-        .dark-mode .custom-switch-indicator {
-            border: 1px solid rgba(255, 255, 0, 0.1);
+        .custom-switch-indicator {
+            border: 1px solid #c1c1c15c;
+        }
+
+        /* fix the check input in light mode */
+        span.custom-control-label:before {
+            border: 1px solid #80808073;
         }
 
         /* LTR the email inputs */
@@ -106,7 +111,7 @@
 
 </head>
 
-<body class="app sidebar-mini {% if request.user.extra.dark_mode %}dark-mode{% endif %}">
+<body class="app sidebar-mini sidenav-toggled icon-overlay">
 
     <!-- PAGE -->
     <div class="page">

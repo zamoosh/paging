@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Segmenting{% endblock %}
+{% comment %}{% load jformat %}{% endcomment %}
+{% block css %}{% endblock %}
+{% block js %}
+    <!-- JQUERY FORM VALIDATOR -->
+    <script src="{% static 'assets/plugins/jquery-form-validator/jquery.validate.js' %}"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('form').validate({
+                rules: {
+                    memory: {
+                        required: true,
+                        digits: true
+                    },
+                },
+                messages: {}
+            });
+        });
+    </script>
+{% endblock %}
+{% block body %}
+
+    <!-- GLOBAL-LOADER -->
+    {% comment %}{% include 'loader.html' %}{% endcomment %}
+    <!-- /GLOBAL-LOADER -->
+
+    <!-- app-Header -->
+    {% include 'header.html' %}
+    <!-- /app-Header -->
+
+    <!--APP-SIDEBAR-->
+    {% include 'menu.html' %}
+
+    <!--app-content open-->
+    <div class="main-content app-content mt-0">
+        <div class="side-app">
+            <!-- CONTAINER -->
+            <div class="main-container container-fluid">
+                <!-- PAGE-HEADER OPTIONAL TO WRITE SOME DATA ABOUT request.user -->
+                <div class="page-header">
+                    <div class="d-flex">
+                        {% comment %} <h1 class="page-title px-2">
+                            {% if request.META.HTTP_REFERER %}
+                                <a href="{{ request.META.HTTP_REFERER }}">
+                                    <i class="fa fa-arrow-right"></i>
+                                    برگشت
+                                </a>
+                            {% endif %}
+                        </h1> {% endcomment %}
+                        <h1 class="page-title px-2">Segmenting</h1>
+                    </div>
+                    <div>
+                        <ol class="breadcrumb mx-2">
+                            <li class="breadcrumb-item active" aria-current="page">Segmenting</li>
+                        </ol>
+                    </div>
+                </div>
+                <!-- PAGE-HEADER END -->
+
+                <!-- write your code here -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title fw-bold">Select your algorithm</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="panel panel-primary">
+                                    <div class="tab-menu-heading mb-4">
+                                        <div class="tabs-menu">
+                                            <!-- Tabs -->
+                                            <ul class="nav panel-tabs">
+                                                <li><a href="{% url 'paging:paging' %}" class="fw-bold">Paging</a></li>
+                                                <li><a href="{% url 'paging:segmenting' %}" class="active fw-bold">Segmentation</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="tab-content">
+                                            <div class="tab-pane active" id="{% url 'paging:segmenting' %}">
+                                                <form action="" method="post" autocomplete="on">
+                                                    {% csrf_token %}
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            {% comment %} <div class="form-group">
+                                                                <label class="custom-control custom-checkbox-md">
+                                                                    <input type="checkbox"
+                                                                           class="custom-control-input"
+                                                                           name="database"
+                                                                           id="database"
+                                                                           value="True">
+                                                                    <span class="custom-control-label fw-bold">
+                                                                        <span class="text-danger">Delete</span>
+                                                                        the database
+                                                                    </span>
+                                                                </label>
+                                                            </div> {% endcomment %}
+                                                            <div class="form-group">
+                                                                <label class="form-label" for="memory">
+                                                                    Total memory size
+                                                                    <span class="text-red">*</span>
+                                                                </label>
+                                                                <input type="number"
+                                                                       name="memory"
+                                                                       id="memory"
+                                                                       class="form-control form-control-lg"
+                                                                       placeholder="number in KB">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12 d-flex justify-content-end">
+                                                            <button type="submit"
+                                                                    class="btn btn-primary fw-bold">
+                                                                submit
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /write your code here -->
+
+            </div>
+            <!-- CONTAINER END -->
+        </div>
+    </div>
+    <!--app-content close-->
+
+
+    <!-- Sidebar-right -->
+    {% comment %}
+    {% include 'side_bar.html' %}
+    {% endcomment %}
+    <!--/Sidebar-right-->
+
+    <!-- Country-selector modal-->
+    {% comment %}
+    {% include 'country_selector.html' %}
+    {% endcomment %}
+    <!-- Country-selector modal-->
+
+    <!-- FOOTER -->
+    {% include 'footer.html' %}
+    <!-- FOOTER END -->
+
+    <!-- BACK-TO-TOP -->
+    <a href="#top" id="back-to-top"><i class="fa fa-angle-up"></i></a>
+{% endblock %}

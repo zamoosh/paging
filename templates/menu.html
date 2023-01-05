@@ -31,9 +31,13 @@
                     <h3>خانه</h3>
                 </li> {% endcomment %}
                 <li class="slide">
-                    <a class="side-menu__item" data-bs-toggle="slide" href="/">
-                        <i class="side-menu__icon fe fe-home"></i>
-                        <span class="side-menu__label">Home</span>
+                    <a class="side-menu__item" data-bs-toggle="slide" href="{% url 'paging:paging' %}">
+                        <i class="side-menu__icon fe fe-layers"></i>
+                        <span class="side-menu__label">Paging</span>
+                    </a>
+                    <a class="side-menu__item" data-bs-toggle="slide" href="{% url 'paging:segmenting' %}">
+                        <i class="side-menu__icon fe fe-layout"></i>
+                        <span class="side-menu__label">Segmenting</span>
                     </a>
                 </li>
             </ul>

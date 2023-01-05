@@ -1,10 +1,12 @@
 from django.db import models
+from django.db.models import F, Count
 
 
 class Memory(models.Model):
     size = models.IntegerField(null=True)
-    page_count = models.IntegerField(null=True)
     page_size = models.IntegerField(null=True)
+    left_memory = models.IntegerField(null=True)
+    page_count = models.IntegerField(null=True)
     left_page = models.IntegerField(null=True)
 
     @classmethod
@@ -50,13 +52,23 @@ class Process(models.Model):
         return list(cls.objects.bulk_create(process_array))
 
     @classmethod
-    def get_json_data(cls):
+    def get_json_data(cls, paging=False):
+        if paging:
+            return list(cls.objects.all().values('status', 'memory', 'start_time', 'duration').annotate(left_time=F('start_time') + F('duration')))
         return list(cls.objects.all().values('memory', 'duration', 'status', 'page_count'))
 
 
 class Log(models.Model):
-    time = models.IntegerField()
+    time = models.IntegerField(unique=True)
     content = models.JSONField(default=dict)
+    type = models.CharField(max_length=10)
+
+    @classmethod
+    def get_object(cls, time):
+        obj = cls.objects.filter(time=time)
+        if obj:
+            return obj.first()
+        return None
 
     @classmethod
     def clear_table(cls):
@@ -65,3 +77,6 @@ class Log(models.Model):
     @classmethod
     def get_all_process_memory(cls):
         cls.objects.aggregate()
+
+    def get_len(self):
+        return len(self.content)

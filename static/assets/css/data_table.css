@@ -11,12 +11,16 @@ table tbody tr:focus-visible,
 table tbody tr:hover:is(:focus-visible),
 table tbody tr:hover:is(:focus-within) {
     opacity: 1 !important;
-    background-color: #3636b5 !important;
+    background-color: #5454ff !important;
     color: #dedefd;
+}
+
+table tbody tr:focus-within * {
+    color: white;
 }
 
 .dark-mode .dropdown-menu>li>a:hover,
 .dark-mode .dropdown-menu>li>a:focus {
     color: white !important;
-    background-color: #3636b5 !important;
+    background-color: #5454ff !important;
 }

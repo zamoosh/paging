@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Process List{% endblock %}
+{% block title %}Process Logs{% endblock %}
 {% comment %}{% load jformat %}{% endcomment %}
 {% block css %}
     <!-- custom style to datatables -->
@@ -72,21 +72,32 @@
                 <!-- PAGE-HEADER OPTIONAL TO WRITE SOME DATA ABOUT request.user -->
                 <div class="page-header">
                     <div class="d-flex">
-                        {% comment %} <h1 class="page-title px-2">
+                         {% comment %} <h1 class="page-title px-2">
                             {% if request.META.HTTP_REFERER %}
                                 <a href="{{ request.META.HTTP_REFERER }}">
                                     <i class="fa fa-arrow-right"></i>
-                                    برگشت
+                                    Back
                                 </a>
                             {% endif %}
                         </h1> {% endcomment %}
-                        <h1 class="page-title px-2">Home</h1>
+                        <h1 class="page-title px-2">{{ log.type }} result</h1>
                     </div>
                     <div>
                         <ol class="breadcrumb mx-2">
-                            <li class="breadcrumb-item active" aria-current="page">Home</li>
+                            <li class="breadcrumb-item active" aria-current="page">{{ log.type }} result</li>
+                            <li class="breadcrumb-item">
+                                <a href="{% url 'paging:index' %}">Home</a>
+                            </li>
                         </ol>
                     </div>
+                </div>
+                <div class="col-12">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et, hic incidunt libero modi nam nemo
+                    neque perferendis sint suscipit vero? Accusantium consequatur incidunt modi officiis quia repellat
+                    suscipit veritatis, voluptate.
+                    <h4>
+                        process count: {{ log.get_len }}
+                    </h4>
                 </div>
                 <!-- PAGE-HEADER END -->
 
@@ -99,24 +110,23 @@
                                     <table class="table text-nowrap border-bottom" id="super">
                                         <thead>
                                             <tr>
-                                                <th class="wd-15p border-bottom-0">time</th>
-                                                <th class="wd-10p border-bottom-0 d-none d-sm-table-cell">total memory</th>
-                                                <th class="wd-10p border-bottom-0 d-none d-md-table-cell">left memory</th>
-                                                <th class="wd-10p border-bottom-0 d-none d-md-table-cell">used memory</th>
+                                                <th class="wd-15p border-bottom-0">Status</th>
+                                                <th class="wd-10p border-bottom-0 d-none d-sm-table-cell">used memory</th>
+                                                <th class="wd-10p border-bottom-0 d-none d-md-table-cell">start time</th>
+                                                <th class="wd-10p border-bottom-0 d-none d-md-table-cell">left time</th>
                                                 <th class="wd-10p border-bottom-0">processes</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-
-                                            {% for log in main_log %}
+                                            {% for p in log.content %}
                                                 <tr>
-                                                    <td class="align-middle fs-15">{{ log.time }}</td>
-                                                    <td class="align-middle d-none d-sm-table-cell fs-15">{{ log.total_memory }}</td>
-                                                    <td class="align-middle d-none d-md-table-cell fs-15">{{ log.left_memory }}</td>
-                                                    <td class="align-middle d-none d-md-table-cell fs-15">{{ log.used_memory }}</td>
+                                                    <td class="align-middle fs-15">{{ p.status }}</td>
+                                                    <td class="align-middle d-none d-sm-table-cell fs-15">{{ p.memory }}</td>
+                                                    <td class="align-middle d-none d-md-table-cell fs-15">{{ p.start_time }}</td>
+                                                    <td class="align-middle d-none d-md-table-cell fs-15">{{ p.left_time }}</td>
                                                     <td class="align-middle">
                                                         <a type="button" href="javascript:void(0)"
-                                                                class="btn rounded-circle border-0 bg-transparent text-primary"
+                                                                class="btn rounded-circle border-0 bg-transparent"
                                                                 style="padding: 4px"
                                                                 aria-expanded="false">VISIT
                                                         </a>
