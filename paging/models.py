@@ -1,5 +1,6 @@
+import random
 from django.db import models
-from django.db.models import F, Count
+from django.db.models import F
 
 
 class Memory(models.Model):
@@ -26,6 +27,7 @@ class Process(models.Model):
     )
     memory = models.IntegerField()
     page_count = models.IntegerField(default=0)
+    init_duration = models.IntegerField(null=True)
     duration = models.IntegerField()
     start_time = models.IntegerField(null=True, blank=True)
     status = models.CharField(choices=PROCESS_STATUS, max_length=3, default="NS")
@@ -36,15 +38,12 @@ class Process(models.Model):
 
     @classmethod
     def generate_process(cls):
-        import random
-
         process_array = []
         for i in range(cls.process_count):
             memory = random.randint(1, 10)
             duration = random.randint(1, 2)
-            process_array.append(cls(memory=memory, duration=duration))
+            process_array.append(cls(memory=memory, duration=duration, init_duration=duration))
         cls.objects.bulk_create(process_array)
-
         return process_array
 
     @classmethod
@@ -54,8 +53,8 @@ class Process(models.Model):
     @classmethod
     def get_json_data(cls, paging=False):
         if paging:
-            return list(cls.objects.all().values('status', 'memory', 'start_time', 'duration').annotate(left_time=F('start_time') + F('duration')))
-        return list(cls.objects.all().values('memory', 'duration', 'status', 'page_count'))
+            return list(cls.objects.all().values('status', 'memory', 'start_time', 'duration', 'init_duration').annotate(left_time=F('start_time') + F('duration')))
+        return list(cls.objects.all().values('status', 'memory', 'start_time', 'duration', 'init_duration').annotate(left_time=F('start_time') + F('duration')))
 
 
 class Log(models.Model):
