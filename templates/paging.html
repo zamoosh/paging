@@ -17,18 +17,25 @@
 
             }, 'memory must be bigger than or equal to page');
 
+            $.validator.addMethod('min_ratio', function () {
+                return (Number(memory.value) / Number(page_size.value)) >= 15;
+
+            }, 'memory must be at least 15 times bigger than or equal to page');
+
             $('form').validate({
                 rules: {
                     memory: {
                         required: true,
                         page_less: true,
                         digits: true,
+                        min_ratio: true
                     },
                     page_size: {
                         required: true,
                         max: 100,
                         page_less: true,
-                        digits: true
+                        digits: true,
+                        min_ratio: true
                     },
                     process_count: {
                         max: 10000,

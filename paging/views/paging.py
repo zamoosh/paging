@@ -9,7 +9,9 @@ def paging(request):
         Process.clear_table()
         Log.clear_table()
 
-        process_count = int(request.POST.get('process_count'))
+        process_count = None
+        if request.POST.get('process_count'):
+            process_count = int(request.POST.get('process_count'))
         memory = int(request.POST.get('memory'))
         page_size = int(request.POST.get('page_size'))
         memory_object = Memory.get_memory()
@@ -30,15 +32,15 @@ def paging(request):
                 if process.status == "D":
                     continue
                 page_per_process = math.ceil(process.memory / page_size)
-                if process.status == "P":
+                if process.status == "IP":
                     process.duration -= 1
                 if process.duration == 0:
                     process.status = "D"
                     memory_object.left_page += process.page_count
-                if memory_object.left_page >= page_per_process and process.status == "NS":
+                if memory_object.left_page >= page_per_process and process.status == "P":
                     process.page_count = page_per_process
                     memory_object.left_page -= page_per_process
-                    process.status = "P"
+                    process.status = "IP"
                     process.start_time = time
 
             Process.clear_table()

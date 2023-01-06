@@ -18,19 +18,19 @@ class Memory(models.Model):
 
 
 class Process(models.Model):
-    process_count = 4
+    process_count = 20
 
     PROCESS_STATUS = (
         ("P", "pending"),
-        ("D", "done"),
-        ("NS", "not started"),
+        ("IP", "in process"),
+        ("D", "done")
     )
     memory = models.IntegerField()
     page_count = models.IntegerField(default=0)
     init_duration = models.IntegerField(null=True)
     duration = models.IntegerField()
     start_time = models.IntegerField(null=True, blank=True)
-    status = models.CharField(choices=PROCESS_STATUS, max_length=3, default="NS")
+    status = models.CharField(choices=PROCESS_STATUS, max_length=3, default="P")
 
     @classmethod
     def clear_table(cls):
@@ -54,8 +54,8 @@ class Process(models.Model):
 
     @classmethod
     def get_json_data(cls, paging=False):
-        if paging:
-            return list(cls.objects.all().values('status', 'memory', 'start_time', 'duration', 'init_duration').annotate(left_time=F('start_time') + F('duration')))
+        # if paging:
+        #     return list(cls.objects.all().values('status', 'memory', 'start_time', 'duration', 'init_duration').annotate(left_time=F('start_time') + F('duration')))
         return list(cls.objects.all().values('status', 'memory', 'start_time', 'duration', 'init_duration').annotate(left_time=F('start_time') + F('duration')))
 
 
