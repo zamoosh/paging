@@ -27,6 +27,7 @@ class Process(models.Model):
     )
     memory = models.IntegerField()
     page_count = models.IntegerField(default=0)
+    page_used = models.IntegerField(default=0)
     init_duration = models.IntegerField(null=True)
     duration = models.IntegerField()
     start_time = models.IntegerField(null=True, blank=True)
@@ -56,7 +57,7 @@ class Process(models.Model):
     def get_json_data(cls, paging=False):
         # if paging:
         #     return list(cls.objects.all().values('status', 'memory', 'start_time', 'duration', 'init_duration').annotate(left_time=F('start_time') + F('duration')))
-        return list(cls.objects.all().values('status', 'memory', 'start_time', 'duration', 'init_duration').annotate(left_time=F('start_time') + F('duration')))
+        return list(cls.objects.all().values('status', 'memory', 'page_used', 'start_time', 'duration', 'init_duration').annotate(left_time=F('start_time') + F('duration')))
 
 
 class Log(models.Model):

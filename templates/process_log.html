@@ -157,6 +157,9 @@
                                                 <th class="wd-10p border-bottom-0 d-none d-md-table-cell">start time</th>
                                                 <th class="wd-10p border-bottom-0 d-none d-md-table-cell">left time</th>
                                                 <th class="wd-10p border-bottom-0 d-none d-sm-table-cell">required memory</th>
+                                                {% if log.type.lower == 'paging' %}
+                                                    <th class="wd-10p border-bottom-0 d-none d-sm-table-cell">page used</th>
+                                                {% endif %}
                                                 <th class="wd-10p border-bottom-0 d-none d-md-table-cell">duration</th>
                                             </tr>
                                         </thead>
@@ -190,6 +193,11 @@
                                                     <td class="align-middle d-none d-sm-table-cell fs-15">
                                                         {{ p.memory }} <span class="text-primary">KB</span>
                                                     </td>
+                                                    {% if log.type.lower == 'paging' %}
+                                                        <td class="align-middle d-none d-sm-table-cell fs-15">
+                                                            {{ p.page_used }}
+                                                        </td>
+                                                    {% endif %}
                                                     <td class="align-middle d-none d-md-table-cell fs-15">
                                                         {{ p.init_duration }} <span class="text-primary">s</span>
                                                     </td>

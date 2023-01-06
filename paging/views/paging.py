@@ -39,6 +39,7 @@ def paging(request):
                     memory_object.left_page += process.page_count
                 if memory_object.left_page >= page_per_process and process.status == "P":
                     process.page_count = page_per_process
+                    process.page_used = page_per_process
                     memory_object.left_page -= page_per_process
                     process.status = "IP"
                     process.start_time = time
