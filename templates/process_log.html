@@ -95,10 +95,10 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title fw-bold">
+                                <h2 class="card-title fw-bold">
                                     Current Time
                                     <span class="text-primary">{{ log.time }}</span>
-                                </h3>
+                                </h2>
                             </div>
                             <div class="card-body">
                                 <div class="row">
@@ -115,14 +115,6 @@
                                             Process Count:
                                             <span class="text-primary">
                                                 {{ process_count }}
-                                            </span>
-                                        </h5>
-                                    </div>
-                                    <div class="col-4 mb-4">
-                                        <h5 class="fw-bold">
-                                            Total Duration:
-                                            <span class="text-primary">
-                                                {{ log.get_len }} s
                                             </span>
                                         </h5>
                                     </div>
@@ -162,21 +154,45 @@
                                             <tr>
                                                 <th class="wd-15p border-bottom-0">#</th>
                                                 <th class="wd-10p border-bottom-0 d-none d-sm-table-cell">status</th>
-                                                <th class="wd-10p border-bottom-0 d-none d-sm-table-cell">used memory</th>
                                                 <th class="wd-10p border-bottom-0 d-none d-md-table-cell">start time</th>
                                                 <th class="wd-10p border-bottom-0 d-none d-md-table-cell">left time</th>
-                                                <th class="wd-10p border-bottom-0 d-none d-md-table-cell">diration</th>
+                                                <th class="wd-10p border-bottom-0 d-none d-sm-table-cell">required memory</th>
+                                                <th class="wd-10p border-bottom-0 d-none d-md-table-cell">duration</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {% for p in log.content %}
                                                 <tr>
                                                     <td class="align-middle fs-15">{{ forloop.counter }}</td>
-                                                    <td class="align-middle d-none d-sm-table-cell fs-15">{{ p.status }}</td>
-                                                    <td class="align-middle d-none d-sm-table-cell fs-15">{{ p.memory }}</td>
-                                                    <td class="align-middle d-none d-md-table-cell fs-15">{{ p.start_time }}</td>
-                                                    <td class="align-middle d-none d-md-table-cell fs-15">{{ p.left_time }}</td>
-                                                    <td class="align-middle d-none d-md-table-cell fs-15">{{ p.init_duration }}</td>
+                                                    <td class="align-middle d-none d-sm-table-cell fs-15">
+                                                        {% if p.status == 'P' %}
+                                                            <span class="text-danger fw-bold">Pending</span>
+                                                        {% elif p.status == 'IP' %}
+                                                            <span class="text-info fw-bold">In Process</span>
+                                                        {% else %}
+                                                            <span class="text-green-1 fw-bold">Done</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="align-middle d-none d-md-table-cell fs-15">
+                                                        {% if p.start_time is None %}
+                                                            -
+                                                        {% else %}
+                                                            {{ p.start_time }}
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="align-middle d-none d-md-table-cell fs-15">
+                                                        {% if p.left_time is None %}
+                                                            -
+                                                        {% else %}
+                                                            {{ p.left_time }} <span class="text-primary">s</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="align-middle d-none d-sm-table-cell fs-15">
+                                                        {{ p.memory }} <span class="text-primary">KB</span>
+                                                    </td>
+                                                    <td class="align-middle d-none d-md-table-cell fs-15">
+                                                        {{ p.init_duration }} <span class="text-primary">s</span>
+                                                    </td>
                                                 </tr>
                                             {% endfor %}
                                         </tbody>

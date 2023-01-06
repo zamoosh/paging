@@ -7,7 +7,9 @@ def segmenting(request):
         Process.clear_table()
         Log.clear_table()
 
-        process_count = int(request.POST.get('process_count'))
+        process_count = None
+        if request.POST.get('process_count'):
+            process_count = int(request.POST.get('process_count'))
         memory = int(request.POST.get('memory'))
         memory_object = Memory.get_memory()
 
@@ -24,14 +26,14 @@ def segmenting(request):
             for process in process_array:
                 if process.status == "D":
                     continue
-                if process.status == "P":
+                if process.status == "IP":
                     process.duration -= 1
                 if process.duration == 0:
                     process.status = "D"
                     memory_object.left_memory += process.memory
-                if memory_object.left_memory >= process.memory and process.status == "NS":
+                if memory_object.left_memory >= process.memory and process.status == "P":
                     memory_object.left_memory -= process.memory
-                    process.status = "P"
+                    process.status = "IP"
                     process.start_time = time
 
             Process.clear_table()
