@@ -9,7 +9,7 @@ urlpatterns = [
     path('segmenting/', segmenting, name='segmenting'),
 
     path('process_list/', ProcessList.as_view(), name="process_list"),
-    path('process_log/<time>/', process_log, name='process_log'),
+    path('process_log/<int:time>/', process_log, name='process_log'),
 
     # page not found
     path('<url>/', index),
