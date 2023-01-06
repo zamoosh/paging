@@ -101,7 +101,7 @@
                                 </h2>
                             </div>
                             <div class="card-body">
-                                <div class="row">
+                                <div class="row mb-3">
                                     <div class="col-4 mb-4">
                                         <h5 class="fw-bold">
                                             Memory Capacity:
@@ -136,6 +136,26 @@
                                             </h5>
                                         </div>
                                     {% endif %}
+                                </div>
+                                <div class="row">
+                                    <div class="col-6 text-start">
+                                        {% if prev_log is not None %}
+                                            <a href="{% url 'paging:process_log' prev_log %}"
+                                                class="btn text-uppercase btn-primary fw-bold">
+                                                <i class="fa fa-arrow-left"></i>
+                                                prev log
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-6 text-end">
+                                        {% if next_log is not None %}
+                                            <a href="{% url 'paging:process_log' next_log %}"
+                                                class="btn text-uppercase btn-primary fw-bold">
+                                                next log
+                                                <i class="fa fa-arrow-right"></i>
+                                            </a>
+                                        {% endif %}
+                                    </div>
                                 </div>
                             </div>
                         </div>
