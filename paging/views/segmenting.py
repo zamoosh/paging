@@ -7,13 +7,14 @@ def segmenting(request):
         Process.clear_table()
         Log.clear_table()
 
+        process_count = int(request.POST.get('process_count'))
         memory = int(request.POST.get('memory'))
         memory_object = Memory.get_memory()
 
         memory_object.size = memory
         memory_object.left_memory = memory
 
-        process_array = Process.generate_process()
+        process_array = Process.generate_process(process_count)
 
         not_completed = Process.objects.exclude(status__icontains='D').exists()
         time = 0

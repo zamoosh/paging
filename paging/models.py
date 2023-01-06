@@ -37,8 +37,10 @@ class Process(models.Model):
         cls.objects.all().delete()
 
     @classmethod
-    def generate_process(cls):
+    def generate_process(cls, process_count=None):
         process_array = []
+        if process_count:
+            cls.process_count = process_count
         for i in range(cls.process_count):
             memory = random.randint(1, 10)
             duration = random.randint(1, 2)

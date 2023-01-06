@@ -15,8 +15,17 @@
                         required: true,
                         digits: true
                     },
+                    process_count: {
+                        max: 10000,
+                        min: 1,
+                    }
                 },
-                messages: {}
+                messages: {
+                    process_count: {
+                        max: 'max amount of process must be 10,000',
+                        min: 'min amount of process must be 1'
+                    }
+                }
             });
         });
     </script>
@@ -83,21 +92,21 @@
                                             <div class="tab-pane active" id="{% url 'paging:segmenting' %}">
                                                 <form action="" method="post" autocomplete="on">
                                                     {% csrf_token %}
+                                                    {% comment %} <div class="form-group">
+                                                        <label class="custom-control custom-checkbox-md">
+                                                            <input type="checkbox"
+                                                                   class="custom-control-input"
+                                                                   name="database"
+                                                                   id="database"
+                                                                   value="True">
+                                                            <span class="custom-control-label fw-bold">
+                                                                <span class="text-danger">Delete</span>
+                                                                the database
+                                                            </span>
+                                                        </label>
+                                                    </div> {% endcomment %}
                                                     <div class="row">
                                                         <div class="col-12">
-                                                            {% comment %} <div class="form-group">
-                                                                <label class="custom-control custom-checkbox-md">
-                                                                    <input type="checkbox"
-                                                                           class="custom-control-input"
-                                                                           name="database"
-                                                                           id="database"
-                                                                           value="True">
-                                                                    <span class="custom-control-label fw-bold">
-                                                                        <span class="text-danger">Delete</span>
-                                                                        the database
-                                                                    </span>
-                                                                </label>
-                                                            </div> {% endcomment %}
                                                             <div class="form-group">
                                                                 <label class="form-label" for="memory">
                                                                     Total memory size
@@ -106,6 +115,19 @@
                                                                 <input type="number"
                                                                        name="memory"
                                                                        id="memory"
+                                                                       required
+                                                                       class="form-control form-control-lg"
+                                                                       placeholder="number in KB">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <div class="form-group">
+                                                                <label class="form-label" for="process_count">
+                                                                    Process count
+                                                                </label>
+                                                                <input type="number"
+                                                                       name="process_count"
+                                                                       id="process_count"
                                                                        class="form-control form-control-lg"
                                                                        placeholder="number in KB">
                                                             </div>

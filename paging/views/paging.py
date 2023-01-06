@@ -9,6 +9,7 @@ def paging(request):
         Process.clear_table()
         Log.clear_table()
 
+        process_count = int(request.POST.get('process_count'))
         memory = int(request.POST.get('memory'))
         page_size = int(request.POST.get('page_size'))
         memory_object = Memory.get_memory()
@@ -18,7 +19,7 @@ def paging(request):
         memory_object.left_page = memory_object.page_count
         memory_object.page_size = page_size
 
-        process_array = Process.generate_process()
+        process_array = Process.generate_process(process_count)
 
         not_completed = Process.objects.exclude(status__icontains='D').exists()
         time = 0
