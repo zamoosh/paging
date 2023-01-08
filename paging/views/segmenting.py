@@ -25,13 +25,13 @@ def segmenting(request):
 
         process_array = Process.generate_process(process_count)
 
-        not_completed = Process.objects.exclude(status__icontains='D').exists()
+        not_completed = Process.objects.exclude(Q(status__icontains='D') | Q(status__icontains='T')).exists()
         time = 0
         main_log = []
         logs = []
         while not_completed:
             for process in process_array:
-                if process.status == "D":
+                if process.status == "D" or process.status == "T":
                     continue
                 if process.status == "IP":
                     process.duration -= 1
@@ -42,6 +42,8 @@ def segmenting(request):
                     memory_object.left_memory -= process.memory
                     process.status = "IP"
                     process.start_time = time
+                if memory_object.page_count < process.memory and process.status == "P":
+                    process.status = 'T'
 
             Process.clear_table()
             process_array = Process.update_process(process_array)
@@ -55,7 +57,7 @@ def segmenting(request):
             main_log.append(time_log)
 
             time += 1
-            not_completed = Process.objects.exclude(status__icontains='D').exists()
+            not_completed = Process.objects.exclude(Q(status__icontains='D') | Q(status__icontains='T')).exists()
         Log.objects.bulk_create(logs)
         context['main_log'] = main_log
         context['algorithm'] = 'Segmenting'

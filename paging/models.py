@@ -45,7 +45,7 @@ class Process(models.Model):
             cls.process_count = process_count
         for i in range(cls.process_count):
             memory = random.randint(1, 10)
-            duration = random.randint(1, 2)
+            duration = random.randint(1, 5)
             process_array.append(cls(memory=memory, duration=duration, init_duration=duration))
         cls.objects.bulk_create(process_array)
         return process_array
