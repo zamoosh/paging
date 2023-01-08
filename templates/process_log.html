@@ -192,6 +192,8 @@
                                                             <span class="text-danger fw-bold">Pending</span>
                                                         {% elif p.status == 'IP' %}
                                                             <span class="text-info fw-bold">In Process</span>
+                                                        {% elif p.status == 'T' %}
+                                                            <span class="text-warning fw-bold">Terminated</span>
                                                         {% else %}
                                                             <span class="text-green-1 fw-bold">Done</span>
                                                         {% endif %}

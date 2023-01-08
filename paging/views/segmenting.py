@@ -3,14 +3,21 @@ from .imports import *
 
 def segmenting(request):
     context = {}
-    if request.method == 'POST':
+    if request.method == 'POST' and required_fields(request, 'memory'):
         Process.clear_table()
         Log.clear_table()
 
         process_count = None
         if request.POST.get('process_count'):
-            process_count = int(request.POST.get('process_count'))
+            try:
+                process_count = int(request.POST.get('process_count'))
+            except (ValueError, Exception):
+                return redirect(reverse('paging:segmenting'))
+        if not is_numeric(request, 'memory'):
+            return redirect(reverse('paging:segmenting'))
         memory = int(request.POST.get('memory'))
+        if memory <= 1:
+            return redirect(reverse('paging:segmenting'))
         memory_object = Memory.get_memory()
 
         memory_object.size = memory

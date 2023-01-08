@@ -23,7 +23,8 @@ class Process(models.Model):
     PROCESS_STATUS = (
         ("P", "pending"),
         ("IP", "in process"),
-        ("D", "done")
+        ("D", "done"),
+        ("T", "terminated"),
     )
     memory = models.IntegerField()
     page_count = models.IntegerField(default=0)
@@ -54,9 +55,7 @@ class Process(models.Model):
         return list(cls.objects.bulk_create(process_array))
 
     @classmethod
-    def get_json_data(cls, paging=False):
-        # if paging:
-        #     return list(cls.objects.all().values('status', 'memory', 'start_time', 'duration', 'init_duration').annotate(left_time=F('start_time') + F('duration')))
+    def get_json_data(cls):
         return list(cls.objects.all().values('status', 'memory', 'page_used', 'start_time', 'duration', 'init_duration').annotate(left_time=F('start_time') + F('duration')))
 
 

@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}Segmenting{% endblock %}
-{% comment %}{% load jformat %}{% endcomment %}
 {% block css %}{% endblock %}
 {% block js %}
     <!-- JQUERY FORM VALIDATOR -->
@@ -9,7 +8,9 @@
 
     <script>
         $(document).ready(function () {
-            $('form').validate({
+            let form = document.getElementsByTagName('form')[0];
+            let submit = form.querySelector('button[type="submit"]');
+            $(form).validate({
                 rules: {
                     memory: {
                         required: true,
@@ -21,10 +22,31 @@
                     }
                 },
                 messages: {
+                    memory: {
+                        min: 'min value of memory must be 15 KB'
+                    },
                     process_count: {
                         max: 'max amount of process must be 10,000',
                         min: 'min amount of process must be 1'
                     }
+                }
+            });
+
+            form.addEventListener('change', function () {
+                let f = $(this);
+                if (f.valid()) {
+                    submit.removeAttribute('hidden');
+                } else {
+                    submit.setAttribute('hidden', 'true');
+                }
+
+            });
+
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+                console.log('prevented!');
+                if ($(form).valid()) {
+                    form.submit();
                 }
             });
         });
@@ -92,19 +114,22 @@
                                             <div class="tab-pane active" id="{% url 'paging:segmenting' %}">
                                                 <form action="" method="post" autocomplete="on">
                                                     {% csrf_token %}
-                                                    {% comment %} <div class="form-group">
-                                                        <label class="custom-control custom-checkbox-md">
-                                                            <input type="checkbox"
-                                                                   class="custom-control-input"
-                                                                   name="database"
-                                                                   id="database"
-                                                                   value="True">
-                                                            <span class="custom-control-label fw-bold">
+                                                     {% comment %} <div class="form-group">
+                                                         <label class="custom-control custom-checkbox-md">
+                                                             <input type="checkbox"
+                                                                    class="custom-control-input"
+                                                                    name="database"
+                                                                    id="database"
+                                                                    value="True">
+                                                             <span class="custom-control-label fw-bold">
                                                                 <span class="text-danger">Delete</span>
                                                                 the database
                                                             </span>
-                                                        </label>
-                                                    </div> {% endcomment %}
+                                                         </label>
+                                                         <small class="text-muted">
+                                                             If check, new processes will be created, otherwise the previous processes would be shown
+                                                         </small>
+                                                     </div> {% endcomment %}
                                                     <div class="row">
                                                         <div class="col-12">
                                                             <div class="form-group">
@@ -113,6 +138,7 @@
                                                                     <span class="text-red">*</span>
                                                                 </label>
                                                                 <input type="number"
+                                                                       min="15"
                                                                        name="memory"
                                                                        id="memory"
                                                                        required
@@ -128,12 +154,14 @@
                                                                 <input type="number"
                                                                        name="process_count"
                                                                        id="process_count"
+                                                                       min="1"
                                                                        class="form-control form-control-lg"
                                                                        placeholder="number in KB">
                                                             </div>
                                                         </div>
                                                         <div class="col-12 d-flex justify-content-end">
                                                             <button type="submit"
+                                                                    hidden
                                                                     class="btn btn-primary fw-bold">
                                                                 submit
                                                             </button>
