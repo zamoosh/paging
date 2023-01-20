@@ -12,7 +12,7 @@ def paging(request):
         process_count = None
         if request.POST.get('process_count'):
             try:
-                process_count = int(request.POST.get('page_size'))
+                process_count = int(request.POST.get('process_count'))
             except (ValueError, Exception):
                 return redirect(reverse('paging:paging'))
         if not is_numeric(request, 'memory', 'page_size'):
